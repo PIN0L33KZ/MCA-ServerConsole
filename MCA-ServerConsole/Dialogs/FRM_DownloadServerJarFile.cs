@@ -153,7 +153,7 @@ namespace MCA_ServerConsole.Properties
                 string response = await httpClient.GetStringAsync(apiUrl);
 
                 // Deserialize JSON response
-                ServerTypesResponse? serverTypesResponse = JsonConvert.DeserializeObject<ServerTypesResponse>(response);
+                ServerTypesResponse? serverTypesResponse = JsonConvert.DeserializeObject<ServerTypesResponse>(response) ?? throw new Exception("API response was empty.");
 
                 // Add types to cache
                 CachedServerTypes.AddRange(serverTypesResponse.Response.Modded);
@@ -220,6 +220,11 @@ namespace MCA_ServerConsole.Properties
 
                 // Deserialize JSON response
                 ServerJarVersionResponse? serverJarResponse = JsonConvert.DeserializeObject<ServerJarVersionResponse>(response);
+
+                if(serverJarResponse == null)
+                {
+                    throw new Exception("API response was empty.");
+                }
 
                 // Add versions to cache
                 List<string> versions = [];
@@ -378,9 +383,9 @@ namespace MCA_ServerConsole.Properties
                     long totalBytesRead = 0;
                     int bytesRead;
 
-                    while((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
+                    while((bytesRead = await contentStream.ReadAsync(buffer)) > 0)
                     {
-                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead));
                         totalBytesRead += bytesRead;
 
                         // Update progress bar
