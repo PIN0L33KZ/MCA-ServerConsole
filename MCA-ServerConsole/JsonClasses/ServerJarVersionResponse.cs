@@ -3,14 +3,14 @@
 public class ServerJarVersionResponse
 {
     [JsonProperty("response")]
-    public List<ServerJar> Response { get; set; }
+    public required List<ServerJar> Response { get; set; }
 }
 
 public class ServerJar
 {
     [JsonProperty("version")]
-    public string Version { get; set; }
+    public required string Version { get; set; }
 
     [JsonProperty("file")]
-    public string File { get; set; }
+    public required string File { get; set; }
 }

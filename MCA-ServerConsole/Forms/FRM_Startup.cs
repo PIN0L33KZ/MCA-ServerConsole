@@ -14,28 +14,26 @@ namespace MCA_ServerConsole
                 // Keep showing the setup form until ServerDirectory is set
                 while(string.IsNullOrWhiteSpace(Properties.Settings.Default.ServerDirectory))
                 {
-                    using(var setupForm = new FRM_Setup())
-                    {
-                        this.Hide(); // Hide the main form during setup
-                        var dialogResult = setupForm.ShowDialog();
+                    using FRM_Setup setupForm = new();
+                    Hide(); // Hide the main form during setup
+                    DialogResult dialogResult = setupForm.ShowDialog();
 
-                        if(dialogResult != DialogResult.OK)
-                        {
-                            // User cancelled the setup
-                            MessageBox.Show(this, "Setup was cancelled. The application cannot continue without a server directory.",
-                                "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            continue;
-                        }
+                    if(dialogResult != DialogResult.OK)
+                    {
+                        // User cancelled the setup
+                        _ = MessageBox.Show(this, "Setup was cancelled. The application cannot continue without a server directory.",
+                            "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        continue;
                     }
                 }
 
                 // Show main form again
-                this.Show();
+                Show();
             }
             catch(Exception ex)
             {
                 // Handle any unexpected errors
-                MessageBox.Show(this, $"An unexpected error occurred: {ex.Message}",
+                _ = MessageBox.Show(this, $"An unexpected error occurred: {ex.Message}",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit(); // Exit the application if an unrecoverable error occurs
             }

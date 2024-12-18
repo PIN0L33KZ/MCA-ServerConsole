@@ -3,11 +3,11 @@
 public class JarFileResponse
 {
     [JsonProperty("response")]
-    public JarResponse Response { get; set; }
+    public required JarResponse Response { get; set; }
 }
 
 public class JarResponse
 {
     [JsonProperty("url")]
-    public string Url { get; set; }
+    public required string Url { get; set; }
 }

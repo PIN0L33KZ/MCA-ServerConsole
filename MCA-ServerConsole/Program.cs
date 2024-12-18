@@ -3,10 +3,10 @@ namespace MCA_ServerConsole
     internal static class Program
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             // Activates DPI-Awareness
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            _ = Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
 
             if(MessageBox.Show("DEBUG: Reset settings?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

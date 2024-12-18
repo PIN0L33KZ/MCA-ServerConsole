@@ -25,14 +25,14 @@ namespace MCA_ServerConsole.Properties
                     CBX_ServerVersion.Enabled = false;
 
                     // Add placeholder item
-                    CBX_ServerType.Items.Add("");
+                    _ = CBX_ServerType.Items.Add("");
                     CBX_ServerType.SelectedIndex = 0;
 
                     // Fetch server types
                     await FetchAndPopulateServerTypes(CBX_ServerType);
 
                     // Fetch matching versions
-                    var selectedType = CBX_ServerType.SelectedItem?.ToString();
+                    string? selectedType = CBX_ServerType.SelectedItem?.ToString();
                     if(!string.IsNullOrEmpty(selectedType))
                     {
                         await FetchAndPopulateVersions(selectedType, CBX_ServerVersion);
@@ -41,32 +41,32 @@ namespace MCA_ServerConsole.Properties
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                    _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(PingException ex)
             {
                 // Handle ping-specific exceptions
-                MessageBox.Show(this, "Ping failed: " + ex.Message,
+                _ = MessageBox.Show(this, "Ping failed: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(HttpRequestException ex)
             {
                 // Handle HTTP request exceptions
-                MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
+                _ = MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(TaskCanceledException)
             {
                 // Handle request timeouts
-                MessageBox.Show(this, "The request timed out. Please try again.",
+                _ = MessageBox.Show(this, "The request timed out. Please try again.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch(Exception ex)
             {
                 // Handle other exceptions
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -78,7 +78,7 @@ namespace MCA_ServerConsole.Properties
                 try
                 {
                     // Fetch matching versions
-                    var selectedType = CBX_ServerType.SelectedItem?.ToString();
+                    string? selectedType = CBX_ServerType.SelectedItem?.ToString();
                     if(!string.IsNullOrEmpty(selectedType))
                     {
                         await FetchAndPopulateVersions(selectedType, CBX_ServerVersion);
@@ -87,32 +87,32 @@ namespace MCA_ServerConsole.Properties
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                    _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(PingException ex)
             {
                 // Handle ping-specific exceptions
-                MessageBox.Show(this, "Ping failed: " + ex.Message,
+                _ = MessageBox.Show(this, "Ping failed: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(HttpRequestException ex)
             {
                 // Handle HTTP request exceptions
-                MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
+                _ = MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(TaskCanceledException)
             {
                 // Handle request timeouts
-                MessageBox.Show(this, "The request timed out. Please try again.",
+                _ = MessageBox.Show(this, "The request timed out. Please try again.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch(Exception ex)
             {
                 // Handle other exceptions
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -125,17 +125,20 @@ namespace MCA_ServerConsole.Properties
                 comboBox.Items.Clear();
                 comboBox.Items.AddRange([.. CachedServerTypes]);
                 if(comboBox.Items.Count > 0)
+                {
                     comboBox.SelectedIndex = 0;
+                }
+
                 return;
             }
 
             // Check internet connection
-            using(var ping = new Ping())
+            using(Ping ping = new())
             {
-                var pingReply = ping.Send("google.de");
+                PingReply pingReply = ping.Send("google.de");
                 if(pingReply == null || pingReply.Status != IPStatus.Success)
                 {
-                    MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
+                    _ = MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -145,12 +148,12 @@ namespace MCA_ServerConsole.Properties
 
             try
             {
-                using var httpClient = new HttpClient();
+                using HttpClient httpClient = new();
                 // Send API request
-                var response = await httpClient.GetStringAsync(apiUrl);
+                string response = await httpClient.GetStringAsync(apiUrl);
 
                 // Deserialize JSON response
-                var serverTypesResponse = JsonConvert.DeserializeObject<ServerTypesResponse>(response);
+                ServerTypesResponse? serverTypesResponse = JsonConvert.DeserializeObject<ServerTypesResponse>(response);
 
                 // Add types to cache
                 CachedServerTypes.AddRange(serverTypesResponse.Response.Modded);
@@ -164,16 +167,18 @@ namespace MCA_ServerConsole.Properties
 
                 // Set first item as selected if available
                 if(comboBox.Items.Count > 0)
+                {
                     comboBox.SelectedIndex = 0;
+                }
             }
             catch(HttpRequestException ex)
             {
-                MessageBox.Show(this, "Failed to fetch server types: " + ex.Message,
+                _ = MessageBox.Show(this, "Failed to fetch server types: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -186,17 +191,20 @@ namespace MCA_ServerConsole.Properties
                 comboBox.Items.Clear();
                 comboBox.Items.AddRange([.. value]);
                 if(comboBox.Items.Count > 0)
+                {
                     comboBox.SelectedIndex = 0;
+                }
+
                 return;
             }
 
             // Check internet connection
-            using(var ping = new Ping())
+            using(Ping ping = new())
             {
-                var pingReply = ping.Send("google.de");
+                PingReply pingReply = ping.Send("google.de");
                 if(pingReply == null || pingReply.Status != IPStatus.Success)
                 {
-                    MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
+                    _ = MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -206,16 +214,16 @@ namespace MCA_ServerConsole.Properties
 
             try
             {
-                using var httpClient = new HttpClient();
+                using HttpClient httpClient = new();
                 // Send API request
-                var response = await httpClient.GetStringAsync(apiUrl);
+                string response = await httpClient.GetStringAsync(apiUrl);
 
                 // Deserialize JSON response
-                var serverJarResponse = JsonConvert.DeserializeObject<ServerJarVersionResponse>(response);
+                ServerJarVersionResponse? serverJarResponse = JsonConvert.DeserializeObject<ServerJarVersionResponse>(response);
 
                 // Add versions to cache
-                var versions = new List<string>();
-                foreach(var jar in serverJarResponse.Response)
+                List<string> versions = [];
+                foreach(ServerJar jar in serverJarResponse.Response)
                 {
                     if(jar != null && jar.Version != null) // Null check for jar and jar.Version
                     {
@@ -230,11 +238,13 @@ namespace MCA_ServerConsole.Properties
 
                 // Set first item as selected if available
                 if(comboBox.Items.Count > 0)
+                {
                     comboBox.SelectedIndex = 0;
+                }
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error fetching server versions: {ex.Message}",
+                _ = MessageBox.Show($"Error fetching server versions: {ex.Message}",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -242,23 +252,23 @@ namespace MCA_ServerConsole.Properties
         private async void BTN_DownloadServerJarFile_Click(object sender, EventArgs e)
         {
             // Check internet connection
-            using var ping = new Ping();
-            var pingReply = ping.Send("google.de");
+            using Ping ping = new();
+            PingReply pingReply = ping.Send("google.de");
             if(pingReply == null || pingReply.Status != IPStatus.Success)
             {
-                MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
+                _ = MessageBox.Show(this, "No internet connection detected. Please check your network settings.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Download Jar file
             // Get selected type and version
-            var selectedType = CBX_ServerType.SelectedItem?.ToString();
-            var selectedVersion = CBX_ServerVersion.SelectedItem?.ToString();
+            string? selectedType = CBX_ServerType.SelectedItem?.ToString();
+            string? selectedVersion = CBX_ServerVersion.SelectedItem?.ToString();
 
             if(string.IsNullOrWhiteSpace(selectedType) || string.IsNullOrWhiteSpace(selectedVersion))
             {
-                MessageBox.Show(this, "Please select a valid server type and version.",
+                _ = MessageBox.Show(this, "Please select a valid server type and version.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -267,13 +277,13 @@ namespace MCA_ServerConsole.Properties
             try
             {
                 // Folder browser dialog configuration
-                var fBD = new FolderBrowserDialog()
+                FolderBrowserDialog fBD = new()
                 {
                     Description = "Select where to store your jar file.",
                     ShowHiddenFiles = false,
                     ShowNewFolderButton = true,
-                    SelectedPath = Properties.Settings.Default.ServerDirectory.Length > 0
-                        ? Properties.Settings.Default.ServerDirectory + '\\'
+                    SelectedPath = Settings.Default.ServerDirectory.Length > 0
+                        ? Settings.Default.ServerDirectory + '\\'
                         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + '\\'
                 };
 
@@ -286,7 +296,7 @@ namespace MCA_ServerConsole.Properties
                 // Validate the selected path
                 if(string.IsNullOrWhiteSpace(fBD.SelectedPath) || !Directory.Exists(fBD.SelectedPath))
                 {
-                    MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -304,28 +314,29 @@ namespace MCA_ServerConsole.Properties
             catch(Exception ex)
             {
                 // Catch unexpected errors and display them
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async Task DownloadJarFile(string type, string version, string saveDirectory, ProgressBar progressBar)
         {
-            progressBar.Invoke(new Action(() => progressBar.Show()));
+            progressBar.Invoke(new Action(progressBar.Show));
 
             string apiUrl = $"https://api.serverjars.in/v1/serverjars/fetchJar/{type}/{version}";
 
             try
             {
-                using var httpClient = new HttpClient();
+                using HttpClient httpClient = new();
+                httpClient.Timeout = TimeSpan.FromSeconds(20);
 
                 // Fetch the jar download URL from the API
-                var response = await httpClient.GetStringAsync(apiUrl);
-                var jarResponse = JsonConvert.DeserializeObject<JarFileResponse>(response);
+                string response = await httpClient.GetStringAsync(apiUrl);
+                JarFileResponse? jarResponse = JsonConvert.DeserializeObject<JarFileResponse>(response);
 
                 // Check if the URL is valid
                 if(jarResponse?.Response?.Url == null)
                 {
-                    MessageBox.Show(this, "Invalid response from the server. Unable to fetch download URL.",
+                    _ = MessageBox.Show(this, "Invalid response from the server. Unable to fetch download URL.",
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -335,7 +346,7 @@ namespace MCA_ServerConsole.Properties
                 // Create save directory if it doesn't exist
                 if(!Directory.Exists(saveDirectory))
                 {
-                    Directory.CreateDirectory(saveDirectory);
+                    _ = Directory.CreateDirectory(saveDirectory);
                 }
 
                 // Determine file name and download path
@@ -343,15 +354,15 @@ namespace MCA_ServerConsole.Properties
                 string downloadPath = Path.Combine(saveDirectory, fileName);
 
                 // Download the .jar file with progress
-                using(var fileResponse = await httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
+                using(HttpResponseMessage fileResponse = await httpClient.GetAsync(downloadUrl, HttpCompletionOption.ResponseHeadersRead))
                 {
-                    fileResponse.EnsureSuccessStatusCode(); // Throws if the status code is not 2xx
+                    _ = fileResponse.EnsureSuccessStatusCode(); // Throws if the status code is not 2xx
 
-                    var contentLength = fileResponse.Content.Headers.ContentLength;
+                    long? contentLength = fileResponse.Content.Headers.ContentLength;
 
                     if(contentLength == null)
                     {
-                        MessageBox.Show(this, "Failed to retrieve file size. Cannot show progress.",
+                        _ = MessageBox.Show(this, "Failed to retrieve file size. Cannot show progress.",
                             "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
@@ -361,47 +372,45 @@ namespace MCA_ServerConsole.Properties
                     progressBar.Maximum = 100;
                     progressBar.Value = 0;
 
-                    using(var fileStream = new FileStream(downloadPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                    using(var contentStream = await fileResponse.Content.ReadAsStreamAsync())
+                    using FileStream fileStream = new(downloadPath, FileMode.Create, FileAccess.Write, FileShare.None);
+                    using Stream contentStream = await fileResponse.Content.ReadAsStreamAsync();
+                    byte[] buffer = new byte[8192]; // 8 KB buffer size
+                    long totalBytesRead = 0;
+                    int bytesRead;
+
+                    while((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
                     {
-                        var buffer = new byte[8192]; // 8 KB buffer size
-                        long totalBytesRead = 0;
-                        int bytesRead;
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
+                        totalBytesRead += bytesRead;
 
-                        while((bytesRead = await contentStream.ReadAsync(buffer, 0, buffer.Length)) > 0)
-                        {
-                            await fileStream.WriteAsync(buffer, 0, bytesRead);
-                            totalBytesRead += bytesRead;
-
-                            // Update progress bar
-                            int progress = (int)((totalBytesRead * 100) / contentLength.Value);
-                            progressBar.Invoke(new Action(() => progressBar.Value = progress));
-                        }
+                        // Update progress bar
+                        int progress = (int)(totalBytesRead * 100 / contentLength.Value);
+                        progressBar.Invoke(new Action(() => progressBar.Value = progress));
                     }
                 }
 
-                MessageBox.Show(this, $"Download completed! File saved to: {downloadPath}",
+                _ = MessageBox.Show(this, $"Download completed! File saved to: {downloadPath}",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(HttpRequestException ex)
             {
-                MessageBox.Show(this, "Failed to download the .jar file: " + ex.Message,
+                _ = MessageBox.Show(this, "Failed to download the .jar file: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(IOException ex)
             {
-                MessageBox.Show(this, "Error saving the .jar file: " + ex.Message,
+                _ = MessageBox.Show(this, "Error saving the .jar file: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(Exception ex)
             {
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
                 // Reset progress bar when done
-                progressBar.Invoke(new Action(() => progressBar.Hide()));
+                progressBar.Invoke(new Action(progressBar.Hide));
             }
         }
     }

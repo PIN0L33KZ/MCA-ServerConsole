@@ -15,46 +15,46 @@ namespace MCA_ServerConsole
             try
             {
                 // Load and validate server name
-                if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServerName))
+                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerName))
                 {
-                    TBX_ServerName.Text = Properties.Settings.Default.ServerName;
+                    TBX_ServerName.Text =   Settings.Default.ServerName;
                 }
 
                 // Load and validate server address
-                if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServerAddress) && RegexTest.IsValidIPv4(Properties.Settings.Default.ServerAddress))
+                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerAddress) && RegexTest.IsValidIPv4(Settings.Default.ServerAddress))
                 {
-                    TBX_ServerAddress.Text = Properties.Settings.Default.ServerAddress;
+                    TBX_ServerAddress.Text = Settings.Default.ServerAddress;
                 }
             }
             catch(Exception ex)
             {
                 // General error handling for unexpected issues
-                MessageBox.Show(this, "An error occurred while loading settings: " + ex.Message,
+                _ = MessageBox.Show(this, "An error occurred while loading settings: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
             {
                 // Load existing setup for ServerDirectory
-                if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServerDirectory))
+                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerDirectory))
                 {
-                    if(Directory.Exists(Properties.Settings.Default.ServerDirectory))
+                    if(Directory.Exists(Settings.Default.ServerDirectory))
                     {
-                        TBX_ServerDirectory.Text = Properties.Settings.Default.ServerDirectory;
+                        TBX_ServerDirectory.Text = Settings.Default.ServerDirectory;
                     }
                     else
                     {
-                        MessageBox.Show(this, "The saved server directory does not exist. Please configure a new directory.",
+                        _ = MessageBox.Show(this, "The saved server directory does not exist. Please configure a new directory.",
                             "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
 
                 // Load existing setup for ServerImage
-                if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServerImage))
+                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerImage))
                 {
                     try
                     {
-                        var serverImage = ImageHelper.ConvertStringToImage(Properties.Settings.Default.ServerImage);
+                        Image serverImage = ImageHelper.ConvertStringToImage(Settings.Default.ServerImage);
                         if(serverImage != null)
                         {
                             PBX_ServerImage.Image = serverImage;
@@ -62,7 +62,7 @@ namespace MCA_ServerConsole
                     }
                     catch(Exception ex)
                     {
-                        MessageBox.Show(this, "An error occurred while loading the server image: " + ex.Message,
+                        _ = MessageBox.Show(this, "An error occurred while loading the server image: " + ex.Message,
                             "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -70,7 +70,7 @@ namespace MCA_ServerConsole
             catch(Exception ex)
             {
                 // General catch for unexpected errors during form load
-                MessageBox.Show(this, "An unexpected error occurred while loading the setup: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred while loading the setup: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -80,13 +80,13 @@ namespace MCA_ServerConsole
             try
             {
                 // Folder browser dialog configuration
-                var fBD = new FolderBrowserDialog()
+                FolderBrowserDialog fBD = new()
                 {
                     Description = "Select where to store your server's files.",
                     ShowHiddenFiles = false,
                     ShowNewFolderButton = true,
-                    SelectedPath = Properties.Settings.Default.ServerDirectory.Length > 0
-                        ? Properties.Settings.Default.ServerDirectory + '\\'
+                    SelectedPath = Settings.Default.ServerDirectory.Length > 0
+                        ? Settings.Default.ServerDirectory + '\\'
                         : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + '\\'
                 };
 
@@ -99,7 +99,7 @@ namespace MCA_ServerConsole
                 // Validate the selected path
                 if(string.IsNullOrWhiteSpace(fBD.SelectedPath) || !Directory.Exists(fBD.SelectedPath))
                 {
-                    MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -111,7 +111,7 @@ namespace MCA_ServerConsole
             catch(Exception ex)
             {
                 // Catch unexpected errors and display them
-                MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -120,14 +120,14 @@ namespace MCA_ServerConsole
             try
             {
                 // Open file dialog configuration
-                var oFD = new OpenFileDialog()
+                OpenFileDialog oFD = new()
                 {
                     CheckFileExists = true,
                     Filter = "Images (*.png, *.jpg, *.jpeg)|*.png;*.jpg;*.jpeg",
                     ShowHiddenFiles = false,
                     Title = "Select a server image",
-                    InitialDirectory = Properties.Settings.Default.ServerDirectory.Length > 0
-                        ? Properties.Settings.Default.ServerDirectory + '\\'
+                    InitialDirectory = Settings.Default.ServerDirectory.Length > 0
+                        ? Settings.Default.ServerDirectory + '\\'
                         : Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + '\\'
                 };
 
@@ -140,7 +140,7 @@ namespace MCA_ServerConsole
                 // User selected an invalid file
                 if(string.IsNullOrWhiteSpace(oFD.FileName))
                 {
-                    MessageBox.Show("No file selected", "Minecraft Advanced Server Console");
+                    _ = MessageBox.Show("No file selected", "Minecraft Advanced Server Console");
                     return;
                 }
 
@@ -150,7 +150,7 @@ namespace MCA_ServerConsole
             catch(Exception ex)
             {
                 // Catch any error and display
-                MessageBox.Show("Error: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Error: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -188,38 +188,38 @@ namespace MCA_ServerConsole
                 // Check if errors exist
                 if(errorCount > 0)
                 {
-                    MessageBox.Show(this, "Please correct the highlighted errors before saving.",
+                    _ = MessageBox.Show(this, "Please correct the highlighted errors before saving.",
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Save settings
-                Properties.Settings.Default.ServerName = TBX_ServerName.Text.Trim();
-                Properties.Settings.Default.ServerAddress = TBX_ServerAddress.Text.Trim();
-                Properties.Settings.Default.ServerDirectory = TBX_ServerDirectory.Text.Trim();
-                Properties.Settings.Default.ServerImage = ImageHelper.ConvertImageToString(PBX_ServerImage.Image);
+                Settings.Default.ServerName = TBX_ServerName.Text.Trim();
+                Settings.Default.ServerAddress = TBX_ServerAddress.Text.Trim();
+                Settings.Default.ServerDirectory = TBX_ServerDirectory.Text.Trim();
+                Settings.Default.ServerImage = ImageHelper.ConvertImageToString(PBX_ServerImage.Image);
 
-                Properties.Settings.Default.Save();
+                Settings.Default.Save();
 
-                this.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
                 Close();
 
                 // Confirmation message
-                MessageBox.Show(this, "Setup saved successfully!",
+                _ = MessageBox.Show(this, "Setup saved successfully!",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
                 // General error handling
-                MessageBox.Show(this, "An unexpected error occurred while saving the setup: " + ex.Message,
+                _ = MessageBox.Show(this, "An unexpected error occurred while saving the setup: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void BTN_AddServerFile_Click(object sender, EventArgs e)
         {
-            var downloadJarFileForm = new FRM_DownloadServerJarFile();
-            downloadJarFileForm.ShowDialog(this);
+            FRM_DownloadServerJarFile downloadJarFileForm = new();
+            _ = downloadJarFileForm.ShowDialog(this);
         }
     }
 }
