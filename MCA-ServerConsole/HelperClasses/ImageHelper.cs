@@ -2,6 +2,7 @@
 {
     internal class ImageHelper
     {
+
         public static string ConvertImageToString(Image image)
         {
             using MemoryStream ms = new();
@@ -21,5 +22,6 @@
 
             return Image.FromStream(ms);
         }
+
     }
 }

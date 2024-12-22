@@ -5,6 +5,7 @@ namespace MCA_ServerConsole
 {
     public partial class FRM_Setup : Form
     {
+
         public FRM_Setup()
         {
             InitializeComponent();
@@ -17,7 +18,7 @@ namespace MCA_ServerConsole
                 // Load and validate server name
                 if(!string.IsNullOrWhiteSpace(Settings.Default.ServerName))
                 {
-                    TBX_ServerName.Text =   Settings.Default.ServerName;
+                    TBX_ServerName.Text = Settings.Default.ServerName;
                 }
 
                 // Load and validate server address
@@ -221,5 +222,6 @@ namespace MCA_ServerConsole
             FRM_DownloadServerJarFile downloadJarFileForm = new();
             _ = downloadJarFileForm.ShowDialog(this);
         }
+
     }
 }
