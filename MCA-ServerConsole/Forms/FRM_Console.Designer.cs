@@ -42,15 +42,24 @@
             PNL_Fill_Fill = new Panel();
             RTB_ServerLog = new RichTextBox();
             PNL_Fill_Bottom = new Panel();
+            BTN_SendCommand = new Button();
+            TBX_CommandText = new TextBox();
+            TSP_StatusBar = new ToolStrip();
+            TSL_ServerStatus = new ToolStripLabel();
+            TSL_GameVersion = new ToolStripLabel();
+            TSL_PortStatus = new ToolStripLabel();
+            TSL_DefaultGamemode = new ToolStripLabel();
             PNL_Fill_Top = new Panel();
             BTN_StopServer = new Button();
-            BTN_RestartServer = new Button();
+            BTN_ReloadServer = new Button();
             BTN_StartServer = new Button();
             PNL_Top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
             PNL_Left.SuspendLayout();
             PNL_Fill.SuspendLayout();
             PNL_Fill_Fill.SuspendLayout();
+            PNL_Fill_Bottom.SuspendLayout();
+            TSP_StatusBar.SuspendLayout();
             PNL_Fill_Top.SuspendLayout();
             SuspendLayout();
             // 
@@ -124,8 +133,10 @@
             IGL_TRV_Directory.ColorDepth = ColorDepth.Depth32Bit;
             IGL_TRV_Directory.ImageStream = (ImageListStreamer)resources.GetObject("IGL_TRV_Directory.ImageStream");
             IGL_TRV_Directory.TransparentColor = Color.Transparent;
-            IGL_TRV_Directory.Images.SetKeyName(0, "file");
+            IGL_TRV_Directory.Images.SetKeyName(0, "rootFolder");
             IGL_TRV_Directory.Images.SetKeyName(1, "folder");
+            IGL_TRV_Directory.Images.SetKeyName(2, "file");
+            IGL_TRV_Directory.Images.SetKeyName(3, "javaFile");
             // 
             // PNL_Left
             // 
@@ -155,33 +166,90 @@
             PNL_Fill_Fill.Location = new Point(0, 45);
             PNL_Fill_Fill.Name = "PNL_Fill_Fill";
             PNL_Fill_Fill.Padding = new Padding(5);
-            PNL_Fill_Fill.Size = new Size(724, 366);
+            PNL_Fill_Fill.Size = new Size(724, 340);
             PNL_Fill_Fill.TabIndex = 3;
             // 
             // RTB_ServerLog
             // 
             RTB_ServerLog.BorderStyle = BorderStyle.FixedSingle;
             RTB_ServerLog.Dock = DockStyle.Fill;
+            RTB_ServerLog.HideSelection = false;
             RTB_ServerLog.Location = new Point(5, 5);
             RTB_ServerLog.Name = "RTB_ServerLog";
             RTB_ServerLog.ReadOnly = true;
-            RTB_ServerLog.Size = new Size(714, 356);
+            RTB_ServerLog.Size = new Size(714, 330);
             RTB_ServerLog.TabIndex = 1;
             RTB_ServerLog.Text = "";
             RTB_ServerLog.TextChanged += RTB_ServerLog_TextChanged;
             // 
             // PNL_Fill_Bottom
             // 
+            PNL_Fill_Bottom.Controls.Add(BTN_SendCommand);
+            PNL_Fill_Bottom.Controls.Add(TBX_CommandText);
+            PNL_Fill_Bottom.Controls.Add(TSP_StatusBar);
             PNL_Fill_Bottom.Dock = DockStyle.Bottom;
-            PNL_Fill_Bottom.Location = new Point(0, 411);
+            PNL_Fill_Bottom.Location = new Point(0, 385);
             PNL_Fill_Bottom.Name = "PNL_Fill_Bottom";
-            PNL_Fill_Bottom.Size = new Size(724, 45);
+            PNL_Fill_Bottom.Size = new Size(724, 71);
             PNL_Fill_Bottom.TabIndex = 2;
+            // 
+            // BTN_SendCommand
+            // 
+            BTN_SendCommand.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BTN_SendCommand.Enabled = false;
+            BTN_SendCommand.Location = new Point(632, 12);
+            BTN_SendCommand.Name = "BTN_SendCommand";
+            BTN_SendCommand.Size = new Size(83, 23);
+            BTN_SendCommand.TabIndex = 2;
+            BTN_SendCommand.Text = "Send";
+            BTN_SendCommand.UseVisualStyleBackColor = true;
+            BTN_SendCommand.Click += BTN_SendCommand_Click;
+            // 
+            // TBX_CommandText
+            // 
+            TBX_CommandText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TBX_CommandText.Enabled = false;
+            TBX_CommandText.Location = new Point(9, 12);
+            TBX_CommandText.Name = "TBX_CommandText";
+            TBX_CommandText.Size = new Size(617, 23);
+            TBX_CommandText.TabIndex = 1;
+            TBX_CommandText.KeyDown += TBX_CommandText_KeyDown;
+            // 
+            // TSP_StatusBar
+            // 
+            TSP_StatusBar.Dock = DockStyle.Bottom;
+            TSP_StatusBar.GripStyle = ToolStripGripStyle.Hidden;
+            TSP_StatusBar.Items.AddRange(new ToolStripItem[] { TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode });
+            TSP_StatusBar.Location = new Point(0, 46);
+            TSP_StatusBar.Name = "TSP_StatusBar";
+            TSP_StatusBar.Size = new Size(724, 25);
+            TSP_StatusBar.TabIndex = 0;
+            // 
+            // TSL_ServerStatus
+            // 
+            TSL_ServerStatus.Name = "TSL_ServerStatus";
+            TSL_ServerStatus.Size = new Size(85, 22);
+            TSL_ServerStatus.Text = "Server stopped";
+            // 
+            // TSL_GameVersion
+            // 
+            TSL_GameVersion.Name = "TSL_GameVersion";
+            TSL_GameVersion.Size = new Size(0, 22);
+            // 
+            // TSL_PortStatus
+            // 
+            TSL_PortStatus.Name = "TSL_PortStatus";
+            TSL_PortStatus.Size = new Size(0, 22);
+            // 
+            // TSL_DefaultGamemode
+            // 
+            TSL_DefaultGamemode.Name = "TSL_DefaultGamemode";
+            TSL_DefaultGamemode.Size = new Size(0, 22);
             // 
             // PNL_Fill_Top
             // 
             PNL_Fill_Top.Controls.Add(BTN_StopServer);
-            PNL_Fill_Top.Controls.Add(BTN_RestartServer);
+            PNL_Fill_Top.Controls.Add(BTN_ReloadServer);
             PNL_Fill_Top.Controls.Add(BTN_StartServer);
             PNL_Fill_Top.Dock = DockStyle.Top;
             PNL_Fill_Top.Location = new Point(0, 0);
@@ -192,6 +260,7 @@
             // BTN_StopServer
             // 
             BTN_StopServer.Anchor = AnchorStyles.Top;
+            BTN_StopServer.Enabled = false;
             BTN_StopServer.Location = new Point(410, 11);
             BTN_StopServer.Name = "BTN_StopServer";
             BTN_StopServer.Size = new Size(83, 23);
@@ -200,15 +269,17 @@
             BTN_StopServer.UseVisualStyleBackColor = true;
             BTN_StopServer.Click += BTN_StopServer_Click;
             // 
-            // BTN_RestartServer
+            // BTN_ReloadServer
             // 
-            BTN_RestartServer.Anchor = AnchorStyles.Top;
-            BTN_RestartServer.Location = new Point(321, 11);
-            BTN_RestartServer.Name = "BTN_RestartServer";
-            BTN_RestartServer.Size = new Size(83, 23);
-            BTN_RestartServer.TabIndex = 0;
-            BTN_RestartServer.Text = "Restart Server";
-            BTN_RestartServer.UseVisualStyleBackColor = true;
+            BTN_ReloadServer.Anchor = AnchorStyles.Top;
+            BTN_ReloadServer.Enabled = false;
+            BTN_ReloadServer.Location = new Point(321, 11);
+            BTN_ReloadServer.Name = "BTN_ReloadServer";
+            BTN_ReloadServer.Size = new Size(83, 23);
+            BTN_ReloadServer.TabIndex = 0;
+            BTN_ReloadServer.Text = "Reload Server";
+            BTN_ReloadServer.UseVisualStyleBackColor = true;
+            BTN_ReloadServer.Click += BTN_ReloadServer_Click;
             // 
             // BTN_StartServer
             // 
@@ -231,7 +302,7 @@
             Controls.Add(PNL_Top);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FRM_Console";
-            Text = "Server Console";
+            Text = "Minecraft Advanced Server Console :: Console";
             FormClosing += FRM_Console_FormClosing;
             PNL_Top.ResumeLayout(false);
             PNL_Top.PerformLayout();
@@ -239,6 +310,10 @@
             PNL_Left.ResumeLayout(false);
             PNL_Fill.ResumeLayout(false);
             PNL_Fill_Fill.ResumeLayout(false);
+            PNL_Fill_Bottom.ResumeLayout(false);
+            PNL_Fill_Bottom.PerformLayout();
+            TSP_StatusBar.ResumeLayout(false);
+            TSP_StatusBar.PerformLayout();
             PNL_Fill_Top.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -257,9 +332,16 @@
         private Panel PNL_Fill_Top;
         private Button BTN_StartServer;
         private Button BTN_StopServer;
-        private Button BTN_RestartServer;
+        private Button BTN_ReloadServer;
         private Panel PNL_Fill_Bottom;
         private RichTextBox RTB_ServerLog;
         private Panel PNL_Fill_Fill;
+        private ToolStrip TSP_StatusBar;
+        private ToolStripLabel TSL_ServerStatus;
+        private ToolStripLabel TSL_GameVersion;
+        private ToolStripLabel TSL_PortStatus;
+        private ToolStripLabel TSL_DefaultGamemode;
+        private TextBox TBX_CommandText;
+        private Button BTN_SendCommand;
     }
 }

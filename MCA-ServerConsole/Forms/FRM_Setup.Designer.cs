@@ -156,7 +156,7 @@
             BTN_AddServerFile.Name = "BTN_AddServerFile";
             BTN_AddServerFile.Size = new Size(431, 25);
             BTN_AddServerFile.TabIndex = 5;
-            BTN_AddServerFile.Text = "Add server file (*.jar)";
+            BTN_AddServerFile.Text = "Add java file (*.jar)";
             BTN_AddServerFile.UseVisualStyleBackColor = true;
             BTN_AddServerFile.Click += BTN_AddServerFile_Click;
             // 
@@ -178,7 +178,7 @@
             Controls.Add(LBL_ServerName);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FRM_Setup";
-            Text = "Setup";
+            Text = "Minecraft Advanced Server Console :: Setup";
             Load += FRM_Setup_Load;
             ((System.ComponentModel.ISupportInitialize)ERP_Main).EndInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).EndInit();

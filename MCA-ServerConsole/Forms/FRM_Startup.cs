@@ -5,7 +5,6 @@ namespace MCA_ServerConsole
 {
     public partial class FRM_Startup : Form
     {
-
         public FRM_Startup()
         {
             InitializeComponent();
@@ -56,10 +55,14 @@ namespace MCA_ServerConsole
 
             // Continue with console form
             using FRM_Console consoleForm = new();
-            Hide(); // Hide the main form during setup
-            DialogResult consoleDialogResult = consoleForm.ShowDialog();
-            Show();
-        }
+            Hide();
+            if(consoleForm.ShowDialog() == DialogResult.OK)
+            {
+                Application.Exit();
+            }
 
+            // Restart if any error occures during FRM_Console
+            Application.Restart();
+        }
     }
 }

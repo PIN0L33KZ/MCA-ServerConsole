@@ -53,7 +53,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FRM_Startup";
-            Text = "Minecraft Advanced Server Console";
+            Text = "Minecraft Advanced Server Console :: Loading";
             Load += FRM_Startup_Load;
             ResumeLayout(false);
         }

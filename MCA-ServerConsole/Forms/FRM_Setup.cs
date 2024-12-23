@@ -22,7 +22,7 @@ namespace MCA_ServerConsole
                 }
 
                 // Load and validate server address
-                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerAddress) && RegexTest.IsValidIPv4(Settings.Default.ServerAddress))
+                if(!string.IsNullOrWhiteSpace(Settings.Default.ServerAddress) && StringHelper.IsValidIPv4(Settings.Default.ServerAddress))
                 {
                     TBX_ServerAddress.Text = Settings.Default.ServerAddress;
                 }
@@ -173,7 +173,7 @@ namespace MCA_ServerConsole
                 }
 
                 // Validate server address
-                if(string.IsNullOrWhiteSpace(TBX_ServerAddress.Text) || !RegexTest.IsValidIPv4(TBX_ServerAddress.Text))
+                if(string.IsNullOrWhiteSpace(TBX_ServerAddress.Text) || !StringHelper.IsValidIPv4(TBX_ServerAddress.Text))
                 {
                     ERP_Main.SetError(TBX_ServerAddress, "Please enter a valid IPv4 address");
                     errorCount++;

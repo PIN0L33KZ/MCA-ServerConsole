@@ -2,25 +2,25 @@
 
 namespace MCA_ServerConsole.Classes
 {
-    public class JavaProcessHandler
+    public class JavaProcessHandler(Action<string, string> keywordHandler)
     {
         private Process? _javaProcess;
+        private readonly Action<string, string> _keywordHandler = keywordHandler;
+
         public bool IsProcessExited => _javaProcess == null || _javaProcess.HasExited;
 
         public async Task StartJavaProcessAsync(string javaArguments, Action<string> outputHandler, Action<string> errorHandler)
         {
             try
             {
-                string javaExecutable = "java";
-
                 ProcessStartInfo processStartInfo = new()
                 {
-                    FileName = javaExecutable,
+                    FileName = "java",
                     Arguments = javaArguments,
                     WorkingDirectory = Properties.Settings.Default.ServerDirectory,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    RedirectStandardInput = true, // Allow sending input to the process
+                    RedirectStandardInput = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
@@ -36,6 +36,7 @@ namespace MCA_ServerConsole.Classes
                     if(!string.IsNullOrEmpty(e.Data))
                     {
                         outputHandler?.Invoke(e.Data);
+                        CheckKeywords(e.Data);
                     }
                 };
 
@@ -48,7 +49,6 @@ namespace MCA_ServerConsole.Classes
                 };
 
                 _ = _javaProcess.Start();
-
                 _javaProcess.BeginOutputReadLine();
                 _javaProcess.BeginErrorReadLine();
 
@@ -56,24 +56,56 @@ namespace MCA_ServerConsole.Classes
             }
             catch(Exception ex)
             {
-                errorHandler?.Invoke($"Error starting Java process: {ex.Message}");
+                errorHandler($"Error starting Java process: {ex.Message}");
+            }
+        }
+
+        private void CheckKeywords(string output)
+        {
+            string[] keywords = { "agree to the eula", "starting", "server version", "server on", "done", "game type", "stopping server" };
+            foreach(string keyword in keywords)
+            {
+                if(output.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+                {
+                    _keywordHandler(keyword, output);
+                }
             }
         }
 
         public void StopJavaProcess()
         {
-            if(_javaProcess != null && !_javaProcess.HasExited)
+            try
             {
-                try
-                {
-                    // Send the "stop" command to the process (if supported)
-                    _javaProcess.StandardInput.WriteLine("stop");
-                    _javaProcess.StandardInput.Flush();
-                }
-                catch(Exception)
-                {
-                    KillJavaProcess();
-                }
+                _javaProcess?.StandardInput.WriteLine("stop");
+                _javaProcess?.StandardInput.Flush();
+            }
+            catch
+            {
+                KillJavaProcess();
+            }
+        }
+
+        public void ReloadJavaProcess()
+        {
+            try
+            {
+                _javaProcess?.StandardInput.WriteLine("reload");
+            }
+            catch
+            {
+                KillJavaProcess();
+            }
+        }
+
+        public void SendToJavaProcess(string input)
+        {
+            try
+            {
+                _javaProcess?.StandardInput.WriteLine(input.Trim());
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show($"Error sending command: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,17 +113,9 @@ namespace MCA_ServerConsole.Classes
         {
             if(_javaProcess != null && !_javaProcess.HasExited)
             {
-                try
-                {
-                    _javaProcess.Kill(); // Forcefully terminate the process
-                    _javaProcess.WaitForExit();
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine($"Error killing Java process: {ex.Message}");
-                }
+                _javaProcess.Kill();
+                _javaProcess.WaitForExit();
             }
         }
-
     }
 }

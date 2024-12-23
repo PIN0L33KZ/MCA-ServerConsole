@@ -116,7 +116,7 @@
             MaximizeBox = false;
             Name = "FRM_DownloadServerJarFile";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Add server file (*.jar)";
+            Text = "Minecraft Advanced Server Console :: Java File";
             Load += FRM_DownloadServerJarFile_Load;
             ResumeLayout(false);
             PerformLayout();

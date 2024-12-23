@@ -4,7 +4,6 @@ namespace MCA_ServerConsole.HelperClasses
 {
     internal class JavaHelper
     {
-
         public static bool IsJavaInstalled()
         {
             try
@@ -93,6 +92,5 @@ namespace MCA_ServerConsole.HelperClasses
                 return [];
             }
         }
-
     }
 }
