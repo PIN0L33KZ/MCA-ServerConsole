@@ -57,12 +57,9 @@ namespace MCA_ServerConsole
             using FRM_Console consoleForm = new();
             Hide();
             if(consoleForm.ShowDialog() == DialogResult.OK)
-            {
                 Application.Exit();
-            }
-
-            // Restart if any error occures during FRM_Console
-            Application.Restart();
+           else
+                Application.Restart(); // restart app if any error occurs during FRM_Console is shown
         }
     }
 }
