@@ -6,6 +6,8 @@
 
 Welcome to the **Minecraft Advanced Server Console** repository! This powerful application serves as a complete solution for managing your Minecraft server. Whether you're setting up a new server, monitoring its performance, or using the console for administrative tasks, this tool has got you covered.
 
+![image](https://github.com/user-attachments/assets/5bc17c9b-584c-4787-bebd-93cc1b8b5835)
+
 ---
 
 ## Features
