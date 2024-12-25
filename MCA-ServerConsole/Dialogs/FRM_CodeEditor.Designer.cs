@@ -73,6 +73,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FRM_CodeEditor";
             Text = "Minecraft Advanced Server Console :: Code Editor";
+            FormClosing += FRM_CodeEditor_FormClosing;
             PNL_Bottom.ResumeLayout(false);
             ResumeLayout(false);
         }

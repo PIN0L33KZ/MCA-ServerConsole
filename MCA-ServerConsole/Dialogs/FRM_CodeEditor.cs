@@ -68,7 +68,7 @@ namespace MCA_ServerConsole.Dialogs
                     case ".txt":
                         this.Text += $" ({fileExtension} File)";
                         break;
-                    
+
                     case ".log":
                         FCT_CodeEditor.TextChanged += ApplySyntaxHighlighting;
                         this.Text += $" ({fileExtension} File)";
@@ -81,6 +81,7 @@ namespace MCA_ServerConsole.Dialogs
                 }
 
                 FCT_CodeEditor.Text = ReadFileContent(_filePath);
+                FCT_CodeEditor.IsChanged = false;
 
                 // Add the editor to the panel
                 PNL_Fill.Controls.Add(FCT_CodeEditor);
@@ -226,12 +227,52 @@ namespace MCA_ServerConsole.Dialogs
             try
             {
                 WriteFileContent(_filePath, FCT_CodeEditor.Text);
+                FCT_CodeEditor.IsChanged = false;
                 this.Close();
             }
             catch(Exception ex)
             {
                 MessageBox.Show($"Error during save operation: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FRM_CodeEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                // Check if the text has changed
+                if(FCT_CodeEditor.IsChanged)
+                {
+                    // Prompt the user to save changes
+                    DialogResult result = MessageBox.Show(
+                        "You have unsaved changes. Do you want to save before closing?",
+                        "Unsaved Changes",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Warning
+                    );
+
+                    switch(result)
+                    {
+                        case DialogResult.Yes:
+                            WriteFileContent(_filePath, FCT_CodeEditor.Text);
+                            break;
+
+                        case DialogResult.No:
+                            // Allow the form to close without saving
+                            break;
+
+                        case DialogResult.Cancel:
+                            e.Cancel = true;
+                            break;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Error during closing: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true; // Prevent the form from closing on error
             }
         }
     }
