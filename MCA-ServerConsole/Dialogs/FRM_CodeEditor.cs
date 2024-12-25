@@ -226,7 +226,9 @@ namespace MCA_ServerConsole.Dialogs
         {
             try
             {
-                WriteFileContent(_filePath, FCT_CodeEditor.Text);
+                if(FCT_CodeEditor.IsChanged)
+                    WriteFileContent(_filePath, FCT_CodeEditor.Text);
+                
                 FCT_CodeEditor.IsChanged = false;
                 this.Close();
             }
