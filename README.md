@@ -8,6 +8,11 @@ Welcome to the **Minecraft Advanced Server Console** repository! This powerful a
 
 ![image](https://github.com/user-attachments/assets/5bc17c9b-584c-4787-bebd-93cc1b8b5835)
 
+Build in Code Editor with Syntax Highlights for .properties .json and logfiles!
+
+![image](https://github.com/user-attachments/assets/dd876f69-441a-4c5e-8f38-7728b6719c72)
+
+
 ---
 
 ## Features
