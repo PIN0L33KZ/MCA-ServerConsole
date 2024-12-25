@@ -36,6 +36,10 @@
             PBX_ServerImage = new PictureBox();
             LBL_ServerName = new Label();
             TRV_Directory = new TreeView();
+            CMS_TRV_Directory = new ContextMenuStrip(components);
+            TMI_EditFile = new ToolStripMenuItem();
+            TMI_SEP1 = new ToolStripSeparator();
+            TMI_DeleteFile = new ToolStripMenuItem();
             IGL_TRV_Directory = new ImageList(components);
             PNL_Left = new Panel();
             PNL_Fill = new Panel();
@@ -55,6 +59,7 @@
             BTN_StartServer = new Button();
             PNL_Top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
+            CMS_TRV_Directory.SuspendLayout();
             PNL_Left.SuspendLayout();
             PNL_Fill.SuspendLayout();
             PNL_Fill_Fill.SuspendLayout();
@@ -118,6 +123,7 @@
             // 
             // TRV_Directory
             // 
+            TRV_Directory.ContextMenuStrip = CMS_TRV_Directory;
             TRV_Directory.Dock = DockStyle.Fill;
             TRV_Directory.ImageIndex = 0;
             TRV_Directory.ImageList = IGL_TRV_Directory;
@@ -126,7 +132,33 @@
             TRV_Directory.SelectedImageIndex = 0;
             TRV_Directory.Size = new Size(286, 451);
             TRV_Directory.TabIndex = 2;
+            TRV_Directory.NodeMouseClick += TRV_Directory_NodeMouseClick;
             TRV_Directory.NodeMouseDoubleClick += TRV_Directory_NodeMouseDoubleClick;
+            // 
+            // CMS_TRV_Directory
+            // 
+            CMS_TRV_Directory.Items.AddRange(new ToolStripItem[] { TMI_EditFile, TMI_SEP1, TMI_DeleteFile });
+            CMS_TRV_Directory.Name = "CMS_TRV_Directory";
+            CMS_TRV_Directory.Size = new Size(125, 54);
+            // 
+            // TMI_EditFile
+            // 
+            TMI_EditFile.Name = "TMI_EditFile";
+            TMI_EditFile.Size = new Size(124, 22);
+            TMI_EditFile.Text = "View/Edit";
+            TMI_EditFile.Click += TMI_EditFile_Click;
+            // 
+            // TMI_SEP1
+            // 
+            TMI_SEP1.Name = "TMI_SEP1";
+            TMI_SEP1.Size = new Size(121, 6);
+            // 
+            // TMI_DeleteFile
+            // 
+            TMI_DeleteFile.Name = "TMI_DeleteFile";
+            TMI_DeleteFile.Size = new Size(124, 22);
+            TMI_DeleteFile.Text = "Delete";
+            TMI_DeleteFile.Click += TMI_DeleteFile_Click;
             // 
             // IGL_TRV_Directory
             // 
@@ -307,6 +339,7 @@
             PNL_Top.ResumeLayout(false);
             PNL_Top.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).EndInit();
+            CMS_TRV_Directory.ResumeLayout(false);
             PNL_Left.ResumeLayout(false);
             PNL_Fill.ResumeLayout(false);
             PNL_Fill_Fill.ResumeLayout(false);
@@ -343,5 +376,9 @@
         private ToolStripLabel TSL_DefaultGamemode;
         private TextBox TBX_CommandText;
         private Button BTN_SendCommand;
+        private ContextMenuStrip CMS_TRV_Directory;
+        private ToolStripMenuItem TMI_DeleteFile;
+        private ToolStripMenuItem TMI_EditFile;
+        private ToolStripSeparator TMI_SEP1;
     }
 }

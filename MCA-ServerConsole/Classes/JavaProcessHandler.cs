@@ -62,7 +62,7 @@ namespace MCA_ServerConsole.Classes
 
         private void CheckKeywords(string output)
         {
-            string[] keywords = { "agree to the eula", "starting", "server version", "server on", "done", "game type", "stopping server" };
+            string[] keywords = { "agree to the eula", "used by another process", "starting", "server version", "server on", "done", "game type", "stopping server" };
             foreach(string keyword in keywords)
             {
                 if(output.Contains(keyword, StringComparison.OrdinalIgnoreCase))
@@ -106,6 +106,33 @@ namespace MCA_ServerConsole.Classes
             catch(Exception ex)
             {
                 _ = MessageBox.Show($"Error sending command: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void KillAlreadyRunningJavaProcesses()
+        {
+            try
+            {
+                IEnumerable<Process> javaProcesses = Process.GetProcesses()
+                    .Where(p => p.ProcessName.Equals("java", StringComparison.OrdinalIgnoreCase) ||
+                                p.ProcessName.StartsWith("openjdk", StringComparison.OrdinalIgnoreCase));
+
+                foreach(Process? process in javaProcesses)
+                {
+                    try
+                    {
+                        process.Kill();
+                        process.WaitForExit();
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"Error killing running Java process (PID: {process.Id}): {ex.Message}");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error searching for running Java processes: {ex.Message}");
             }
         }
 

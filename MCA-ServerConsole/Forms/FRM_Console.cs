@@ -1,4 +1,5 @@
 ﻿using MCA_ServerConsole.Classes;
+using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
@@ -239,6 +240,10 @@ namespace MCA_ServerConsole.Forms
                     _uiHandler.UpdateUI(keyword, output);
                     break;
 
+                case "used by another process":
+                    _uiHandler.UpdateUI(keyword, output);
+                    break;
+
                 case "starting":
                     _uiHandler.UpdateUI(keyword, output);
                     break;
@@ -266,6 +271,15 @@ namespace MCA_ServerConsole.Forms
                 default:
                     AppendLog($"[INFO] {output}");
                     break;
+            }
+        }
+
+        private void TRV_Directory_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            // Set the selected node for right-click or left-click
+            if(e.Button is MouseButtons.Right or MouseButtons.Left)
+            {
+                TRV_Directory.SelectedNode = e.Node;
             }
         }
 
@@ -339,6 +353,77 @@ namespace MCA_ServerConsole.Forms
             if(e.KeyCode == Keys.Enter)
             {
                 BTN_SendCommand.PerformClick();
+            }
+        }
+
+        private void TMI_EditFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get the selected node
+                TreeNode? selectedNode = TRV_Directory.SelectedNode;
+                if(selectedNode == null || selectedNode.Tag == null)
+                {
+                    _ = MessageBox.Show("Please select a file to view or edit.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string? path = selectedNode.Tag.ToString();
+                if(File.Exists(path))
+                {
+                    // Open file in default editor
+                    FRM_CodeEditor codeEditorForm = new(path);
+                    _ = codeEditorForm.ShowDialog();
+                }
+                else
+                {
+                    _ = MessageBox.Show("The selected file does not exist.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show($"Error opening file: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TMI_DeleteFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Get the selected node
+                TreeNode? selectedNode = TRV_Directory.SelectedNode;
+                if(selectedNode == null || selectedNode.Tag == null)
+                {
+                    _ = MessageBox.Show("Please select a file or folder to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                string? path = selectedNode.Tag.ToString();
+                if(MessageBox.Show($"Delete {StringHelper.CutTillLastPart(path, "\\")}?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                if(File.Exists(path))
+                {
+                    // Delete file
+                    File.Delete(path);
+                    _ = MessageBox.Show("File deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if(Directory.Exists(path))
+                {
+                    // Delete folder
+                    Directory.Delete(path, true);
+                    _ = MessageBox.Show("Folder deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    _ = MessageBox.Show("The selected item does not exist.", "Item Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show($"Error deleting file or folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

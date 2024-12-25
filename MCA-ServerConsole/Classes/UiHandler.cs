@@ -42,6 +42,17 @@ namespace MCA_ServerConsole.Classes
                     _startServerButton.PerformClick();
                     break;
 
+                case "used by another process":
+                    if(MessageBox.Show("There's already a server process running in the background, cancel running task?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                    {
+                        _startServerButton.Enabled = true;
+                        return;
+                    }
+                    JavaProcessHandler.KillAlreadyRunningJavaProcesses();
+                    _startServerButton.Enabled = true;
+                    _startServerButton.PerformClick();
+                    break;
+
                 // Indicates that the server is starting
                 case "starting":
                     _serverStatusLabel.Text = "Server starting... ";
