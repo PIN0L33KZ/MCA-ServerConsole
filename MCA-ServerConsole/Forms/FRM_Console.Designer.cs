@@ -54,7 +54,6 @@
             TSL_PortStatus = new ToolStripLabel();
             TSL_DefaultGamemode = new ToolStripLabel();
             PNL_Fill_Top = new Panel();
-            button1 = new Button();
             BTN_StopServer = new Button();
             BTN_ReloadServer = new Button();
             BTN_StartServer = new Button();
@@ -286,7 +285,6 @@
             // 
             // PNL_Fill_Top
             // 
-            PNL_Fill_Top.Controls.Add(button1);
             PNL_Fill_Top.Controls.Add(BTN_StopServer);
             PNL_Fill_Top.Controls.Add(BTN_ReloadServer);
             PNL_Fill_Top.Controls.Add(BTN_StartServer);
@@ -295,19 +293,6 @@
             PNL_Fill_Top.Name = "PNL_Fill_Top";
             PNL_Fill_Top.Size = new Size(724, 45);
             PNL_Fill_Top.TabIndex = 0;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.Red;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(9, 7);
-            button1.Name = "button1";
-            button1.Size = new Size(86, 31);
-            button1.TabIndex = 1;
-            button1.Text = "debug";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
             // 
             // BTN_StopServer
             // 
@@ -404,6 +389,5 @@
         private ToolStripMenuItem TMI_DeleteFile;
         private ToolStripMenuItem TMI_EditFile;
         private ToolStripSeparator TMI_SEP1;
-        private Button button1;
     }
 }

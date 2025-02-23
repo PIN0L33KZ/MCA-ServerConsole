@@ -1,9 +1,9 @@
-﻿using MCA_ServerConsole.Classes;
-using MCA_ServerConsole.Dialogs;
-using MCA_ServerConsole.HelperClasses;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
+using MCA_ServerConsole.Classes;
+using MCA_ServerConsole.Dialogs;
+using MCA_ServerConsole.HelperClasses;
 
 namespace MCA_ServerConsole.Forms
 {
@@ -344,7 +344,7 @@ namespace MCA_ServerConsole.Forms
 
         private void BTN_SendCommand_Click(object sender, EventArgs e)
         {
-            TBX_CommandText.Text.Trim();
+            _ = TBX_CommandText.Text.Trim();
             if(TBX_CommandText.Text.Length == 0)
             {
                 return;
@@ -357,7 +357,7 @@ namespace MCA_ServerConsole.Forms
 
         private void TBX_CommandText_KeyDown(object sender, KeyEventArgs e)
         {
-            TBX_CommandText.Text.Trim();
+            _ = TBX_CommandText.Text.Trim();
 
             if(TBX_CommandText.Text.Length == 0)
             {
@@ -392,17 +392,14 @@ namespace MCA_ServerConsole.Forms
                 }
                 else if(Directory.Exists(path))
                 {
-                    Process.Start("explorer.exe", path);
+                    _ = Process.Start("explorer.exe", path);
                 }
                 else
                 {
                     _ = MessageBox.Show("The selected file does not exist.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch(Exception ex)
-            {
-                _ = MessageBox.Show($"Error opening file: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch(Exception) { }
         }
 
         private void TMI_DeleteFile_Click(object sender, EventArgs e)
@@ -445,15 +442,9 @@ namespace MCA_ServerConsole.Forms
                 _ = MessageBox.Show($"Error deleting file or folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
 
 /// ToDo:
 /// Add Save Log button
-/// RAM & CPU usage graphs
 /// Context menu stips to open up player and settings manager etc.

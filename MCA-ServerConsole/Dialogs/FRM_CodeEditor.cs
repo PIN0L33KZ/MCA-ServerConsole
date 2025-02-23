@@ -1,6 +1,5 @@
-﻿using FastColoredTextBoxNS;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using FastColoredTextBoxNS;
 
 namespace MCA_ServerConsole.Dialogs
 {
@@ -10,13 +9,13 @@ namespace MCA_ServerConsole.Dialogs
         private FastColoredTextBox FCT_CodeEditor;
 
         // Define styles once and reuse them
-        private readonly TextStyle CommentStyle = new TextStyle(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
-        private readonly TextStyle KeyStyle = new TextStyle(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
-        private readonly TextStyle ValueStyle = new TextStyle(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Regular);
-        private readonly TextStyle EscapeStyle = new TextStyle(new SolidBrush(Color.FromArgb(22, 160, 133)), null, FontStyle.Bold);
-        private readonly TextStyle TimeStyle = new TextStyle(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
-        private readonly TextStyle LogLevelStyle = new TextStyle(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Bold);
-        private readonly TextStyle ThreadStyle = new TextStyle(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
+        private readonly TextStyle CommentStyle = new(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
+        private readonly TextStyle KeyStyle = new(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
+        private readonly TextStyle ValueStyle = new(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Regular);
+        private readonly TextStyle EscapeStyle = new(new SolidBrush(Color.FromArgb(22, 160, 133)), null, FontStyle.Bold);
+        private readonly TextStyle TimeStyle = new(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
+        private readonly TextStyle LogLevelStyle = new(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Bold);
+        private readonly TextStyle ThreadStyle = new(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
 
         public FRM_CodeEditor(string filePath)
         {
@@ -57,25 +56,25 @@ namespace MCA_ServerConsole.Dialogs
                 {
                     case ".json":
                         FCT_CodeEditor.TextChanged += ApplySyntaxHighlighting;
-                        this.Text += $" ({fileExtension} File)";
+                        Text += $" ({fileExtension} File)";
                         break;
 
                     case ".properties":
                         FCT_CodeEditor.TextChanged += ApplySyntaxHighlighting;
-                        this.Text += $" ({fileExtension} File)";
+                        Text += $" ({fileExtension} File)";
                         break;
 
                     case ".txt":
-                        this.Text += $" ({fileExtension} File)";
+                        Text += $" ({fileExtension} File)";
                         break;
 
                     case ".log":
                         FCT_CodeEditor.TextChanged += ApplySyntaxHighlighting;
-                        this.Text += $" ({fileExtension} File)";
+                        Text += $" ({fileExtension} File)";
                         break;
 
                     default:
-                        MessageBox.Show("No syntax highlighting available for this file type.",
+                        _ = MessageBox.Show("No syntax highlighting available for this file type.",
                             "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
                 }
@@ -88,7 +87,7 @@ namespace MCA_ServerConsole.Dialogs
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error initializing code editor: {ex.Message}",
+                _ = MessageBox.Show($"Error initializing code editor: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close(); // Close the form if initialization fails
             }
@@ -116,7 +115,7 @@ namespace MCA_ServerConsole.Dialogs
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error applying syntax highlighting: {ex.Message}",
+                _ = MessageBox.Show($"Error applying syntax highlighting: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -179,26 +178,29 @@ namespace MCA_ServerConsole.Dialogs
             }
         }
 
-        private static string ReadFileContent(string filePath)
+        private string ReadFileContent(string filePath)
         {
             try
             {
-                if(!File.Exists(filePath))
-                {
-                    throw new FileNotFoundException($"The file '{filePath}' does not exist.");
-                }
-
-                return File.ReadAllText(filePath).Trim();
+                return !File.Exists(filePath)
+                    ? throw new FileNotFoundException($"The file '{filePath}' does not exist.")
+                    : File.ReadAllText(filePath).Trim();
             }
             catch(UnauthorizedAccessException ex)
             {
-                MessageBox.Show($"Access to the file is denied: {ex.Message}",
+                _ = MessageBox.Show($"Access to the file is denied: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return string.Empty;
+            }
+            catch(IOException ex) when((ex.HResult & 0xFFFF) == 32)
+            {
+                _ = MessageBox.Show($"This file is currently being used by your Server. Stop the server to edit this file.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
                 return string.Empty;
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error reading file: {ex.Message}",
+                _ = MessageBox.Show($"Error reading file: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return string.Empty;
             }
@@ -212,12 +214,12 @@ namespace MCA_ServerConsole.Dialogs
             }
             catch(UnauthorizedAccessException ex)
             {
-                MessageBox.Show($"Access to write the file is denied: {ex.Message}",
+                _ = MessageBox.Show($"Access to write the file is denied: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error writing to file: {ex.Message}",
+                _ = MessageBox.Show($"Error writing to file: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -227,14 +229,16 @@ namespace MCA_ServerConsole.Dialogs
             try
             {
                 if(FCT_CodeEditor.IsChanged)
+                {
                     WriteFileContent(_filePath, FCT_CodeEditor.Text);
-                
+                }
+
                 FCT_CodeEditor.IsChanged = false;
-                this.Close();
+                Close();
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error during save operation: {ex.Message}",
+                _ = MessageBox.Show($"Error during save operation: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -272,7 +276,7 @@ namespace MCA_ServerConsole.Dialogs
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"Error during closing: {ex.Message}",
+                _ = MessageBox.Show($"Error during closing: {ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true; // Prevent the form from closing on error
             }

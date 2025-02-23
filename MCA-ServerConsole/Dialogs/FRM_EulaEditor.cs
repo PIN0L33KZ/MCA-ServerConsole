@@ -1,4 +1,6 @@
-﻿namespace MCA_ServerConsole.Dialogs
+﻿using Microsoft.Web.WebView2.Core;
+
+namespace MCA_ServerConsole.Dialogs
 {
     public partial class FRM_EulaEditor : Form
     {
@@ -19,6 +21,8 @@
             {
                 await WBV_EulaText.EnsureCoreWebView2Async();
                 WBV_EulaText.CoreWebView2.Navigate(@"https://aka.ms/MinecraftEULA");
+                WBV_EulaText.ZoomFactor = 0.5;
+                await WBV_EulaText.CoreWebView2.Profile.ClearBrowsingDataAsync(CoreWebView2BrowsingDataKinds.Cookies);
             }
             catch(Exception ex)
             {
