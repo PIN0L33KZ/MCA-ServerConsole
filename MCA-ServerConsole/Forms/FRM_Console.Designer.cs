@@ -54,6 +54,7 @@
             TSL_PortStatus = new ToolStripLabel();
             TSL_DefaultGamemode = new ToolStripLabel();
             PNL_Fill_Top = new Panel();
+            button1 = new Button();
             BTN_StopServer = new Button();
             BTN_ReloadServer = new Button();
             BTN_StartServer = new Button();
@@ -93,6 +94,7 @@
             // CBX_JarFile
             // 
             CBX_JarFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CBX_JarFile.Cursor = Cursors.Hand;
             CBX_JarFile.DropDownStyle = ComboBoxStyle.DropDownList;
             CBX_JarFile.FormattingEnabled = true;
             CBX_JarFile.Location = new Point(877, 11);
@@ -143,6 +145,7 @@
             // 
             // TMI_EditFile
             // 
+            TMI_EditFile.Image = Properties.Resources.edit;
             TMI_EditFile.Name = "TMI_EditFile";
             TMI_EditFile.Size = new Size(124, 22);
             TMI_EditFile.Text = "View/Edit";
@@ -155,6 +158,7 @@
             // 
             // TMI_DeleteFile
             // 
+            TMI_DeleteFile.Image = Properties.Resources.delete;
             TMI_DeleteFile.Name = "TMI_DeleteFile";
             TMI_DeleteFile.Size = new Size(124, 22);
             TMI_DeleteFile.Text = "Delete";
@@ -228,6 +232,7 @@
             // BTN_SendCommand
             // 
             BTN_SendCommand.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BTN_SendCommand.Cursor = Cursors.Hand;
             BTN_SendCommand.Enabled = false;
             BTN_SendCommand.Location = new Point(632, 12);
             BTN_SendCommand.Name = "BTN_SendCommand";
@@ -259,8 +264,9 @@
             // 
             // TSL_ServerStatus
             // 
+            TSL_ServerStatus.Image = Properties.Resources.stopped;
             TSL_ServerStatus.Name = "TSL_ServerStatus";
-            TSL_ServerStatus.Size = new Size(85, 22);
+            TSL_ServerStatus.Size = new Size(101, 22);
             TSL_ServerStatus.Text = "Server stopped";
             // 
             // TSL_GameVersion
@@ -280,6 +286,7 @@
             // 
             // PNL_Fill_Top
             // 
+            PNL_Fill_Top.Controls.Add(button1);
             PNL_Fill_Top.Controls.Add(BTN_StopServer);
             PNL_Fill_Top.Controls.Add(BTN_ReloadServer);
             PNL_Fill_Top.Controls.Add(BTN_StartServer);
@@ -289,9 +296,23 @@
             PNL_Fill_Top.Size = new Size(724, 45);
             PNL_Fill_Top.TabIndex = 0;
             // 
+            // button1
+            // 
+            button1.BackColor = Color.Red;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.White;
+            button1.Location = new Point(9, 7);
+            button1.Name = "button1";
+            button1.Size = new Size(86, 31);
+            button1.TabIndex = 1;
+            button1.Text = "debug";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // BTN_StopServer
             // 
             BTN_StopServer.Anchor = AnchorStyles.Top;
+            BTN_StopServer.Cursor = Cursors.Hand;
             BTN_StopServer.Enabled = false;
             BTN_StopServer.Location = new Point(410, 11);
             BTN_StopServer.Name = "BTN_StopServer";
@@ -304,6 +325,7 @@
             // BTN_ReloadServer
             // 
             BTN_ReloadServer.Anchor = AnchorStyles.Top;
+            BTN_ReloadServer.Cursor = Cursors.Hand;
             BTN_ReloadServer.Enabled = false;
             BTN_ReloadServer.Location = new Point(321, 11);
             BTN_ReloadServer.Name = "BTN_ReloadServer";
@@ -316,6 +338,7 @@
             // BTN_StartServer
             // 
             BTN_StartServer.Anchor = AnchorStyles.Top;
+            BTN_StartServer.Cursor = Cursors.Hand;
             BTN_StartServer.Location = new Point(232, 11);
             BTN_StartServer.Name = "BTN_StartServer";
             BTN_StartServer.Size = new Size(83, 23);
@@ -333,6 +356,7 @@
             Controls.Add(PNL_Left);
             Controls.Add(PNL_Top);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(737, 383);
             Name = "FRM_Console";
             Text = "Minecraft Advanced Server Console :: Console";
             FormClosing += FRM_Console_FormClosing;
@@ -380,5 +404,6 @@
         private ToolStripMenuItem TMI_DeleteFile;
         private ToolStripMenuItem TMI_EditFile;
         private ToolStripSeparator TMI_SEP1;
+        private Button button1;
     }
 }

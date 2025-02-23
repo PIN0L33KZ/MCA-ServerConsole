@@ -61,6 +61,7 @@
             // BTN_AgreeEula
             // 
             BTN_AgreeEula.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_AgreeEula.Cursor = Cursors.Hand;
             BTN_AgreeEula.DialogResult = DialogResult.OK;
             BTN_AgreeEula.Enabled = false;
             BTN_AgreeEula.Location = new Point(12, 8);

@@ -1,6 +1,7 @@
 ﻿using MCA_ServerConsole.Classes;
 using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
@@ -343,6 +344,12 @@ namespace MCA_ServerConsole.Forms
 
         private void BTN_SendCommand_Click(object sender, EventArgs e)
         {
+            TBX_CommandText.Text.Trim();
+            if(TBX_CommandText.Text.Length == 0)
+            {
+                return;
+            }
+
             AppendLog($"> {TBX_CommandText.Text.Trim()}");
             _javaProcessHandler.SendToJavaProcess(TBX_CommandText.Text.Trim());
             TBX_CommandText.Clear();
@@ -350,9 +357,17 @@ namespace MCA_ServerConsole.Forms
 
         private void TBX_CommandText_KeyDown(object sender, KeyEventArgs e)
         {
+            TBX_CommandText.Text.Trim();
+
+            if(TBX_CommandText.Text.Length == 0)
+            {
+                return;
+            }
+
             if(e.KeyCode == Keys.Enter)
             {
                 BTN_SendCommand.PerformClick();
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -374,6 +389,10 @@ namespace MCA_ServerConsole.Forms
                     // Open file in default editor
                     FRM_CodeEditor codeEditorForm = new(path);
                     _ = codeEditorForm.ShowDialog();
+                }
+                else if(Directory.Exists(path))
+                {
+                    Process.Start("explorer.exe", path);
                 }
                 else
                 {
@@ -426,11 +445,15 @@ namespace MCA_ServerConsole.Forms
                 _ = MessageBox.Show($"Error deleting file or folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
 
 /// ToDo:
 /// Add Save Log button
-/// EULA editor to accept EULA right away
 /// RAM & CPU usage graphs
 /// Context menu stips to open up player and settings manager etc.

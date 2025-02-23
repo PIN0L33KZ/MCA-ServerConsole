@@ -23,6 +23,7 @@ namespace MCA_ServerConsole.Classes
                 // User needs to accept the EULA
                 case "agree to the eula":
                     _serverStatusLabel.Text = "Server stopped";
+                    _serverStatusLabel.Image = Properties.Resources.stopped;
                     _startServerButton.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = true;
 
@@ -56,6 +57,7 @@ namespace MCA_ServerConsole.Classes
                 // Indicates that the server is starting
                 case "starting":
                     _serverStatusLabel.Text = "Server starting... ";
+                    _serverStatusLabel.Image = Properties.Resources.starting;
                     _startServerButton.Enabled = false;
                     _reloadServerButton.Enabled = false;
                     _stopServerbutton.Enabled = false;
@@ -80,6 +82,7 @@ namespace MCA_ServerConsole.Classes
                 // Indicates that the server is started successfully
                 case "done":
                     _serverStatusLabel.Text = "Server running |";
+                    _serverStatusLabel.Image = Properties.Resources.running;
                     _startServerButton.Enabled = false;
                     _reloadServerButton.Enabled = true;
                     _stopServerbutton.Enabled = true;
@@ -91,6 +94,7 @@ namespace MCA_ServerConsole.Classes
                 // Indicates that the server is stoped successfully
                 case "stopping server":
                     _serverStatusLabel.Text = "Server stopped";
+                    _serverStatusLabel.Image = Properties.Resources.stopped;
                     _startServerButton.Enabled = true;
                     _reloadServerButton.Enabled = false;
                     _stopServerbutton.Enabled = false;

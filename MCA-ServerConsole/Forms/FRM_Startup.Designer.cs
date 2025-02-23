@@ -49,6 +49,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(403, 64);
             Controls.Add(PGB_Loading);
+            Cursor = Cursors.WaitCursor;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;

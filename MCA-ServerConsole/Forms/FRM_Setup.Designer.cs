@@ -108,6 +108,7 @@
             // 
             // BTN_SelectServerDirectory
             // 
+            BTN_SelectServerDirectory.Cursor = Cursors.Hand;
             BTN_SelectServerDirectory.Location = new Point(304, 69);
             BTN_SelectServerDirectory.Name = "BTN_SelectServerDirectory";
             BTN_SelectServerDirectory.Size = new Size(25, 25);
@@ -130,6 +131,7 @@
             // BTX_SelectServerImage
             // 
             BTX_SelectServerImage.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BTX_SelectServerImage.Cursor = Cursors.Hand;
             BTX_SelectServerImage.Location = new Point(361, 98);
             BTX_SelectServerImage.Name = "BTX_SelectServerImage";
             BTX_SelectServerImage.Size = new Size(80, 25);
@@ -141,6 +143,7 @@
             // BTN_SaveSetup
             // 
             BTN_SaveSetup.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_SaveSetup.Cursor = Cursors.Hand;
             BTN_SaveSetup.Location = new Point(12, 206);
             BTN_SaveSetup.Name = "BTN_SaveSetup";
             BTN_SaveSetup.Size = new Size(431, 25);
@@ -152,6 +155,7 @@
             // BTN_AddServerFile
             // 
             BTN_AddServerFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_AddServerFile.Cursor = Cursors.Hand;
             BTN_AddServerFile.Location = new Point(12, 175);
             BTN_AddServerFile.Name = "BTN_AddServerFile";
             BTN_AddServerFile.Size = new Size(431, 25);

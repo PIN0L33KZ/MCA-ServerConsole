@@ -55,6 +55,7 @@
             // BTN_SaveFile
             // 
             BTN_SaveFile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_SaveFile.Cursor = Cursors.Hand;
             BTN_SaveFile.Location = new Point(12, 8);
             BTN_SaveFile.Name = "BTN_SaveFile";
             BTN_SaveFile.Size = new Size(776, 23);

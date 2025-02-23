@@ -50,6 +50,7 @@
             // CBX_ServerVersion
             // 
             CBX_ServerVersion.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            CBX_ServerVersion.Cursor = Cursors.Hand;
             CBX_ServerVersion.DropDownStyle = ComboBoxStyle.DropDownList;
             CBX_ServerVersion.Enabled = false;
             CBX_ServerVersion.FormattingEnabled = true;
@@ -64,13 +65,14 @@
             LBL_ServerType.AutoSize = true;
             LBL_ServerType.Location = new Point(21, 25);
             LBL_ServerType.Name = "LBL_ServerType";
-            LBL_ServerType.Size = new Size(60, 15);
+            LBL_ServerType.Size = new Size(61, 15);
             LBL_ServerType.TabIndex = 1;
             LBL_ServerType.Text = "Server Typ";
             // 
             // CBX_ServerType
             // 
             CBX_ServerType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            CBX_ServerType.Cursor = Cursors.Hand;
             CBX_ServerType.DropDownStyle = ComboBoxStyle.DropDownList;
             CBX_ServerType.FormattingEnabled = true;
             CBX_ServerType.Location = new Point(107, 21);
@@ -82,6 +84,7 @@
             // BTN_DownloadServerJarFile
             // 
             BTN_DownloadServerJarFile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_DownloadServerJarFile.Cursor = Cursors.Hand;
             BTN_DownloadServerJarFile.Location = new Point(21, 119);
             BTN_DownloadServerJarFile.Name = "BTN_DownloadServerJarFile";
             BTN_DownloadServerJarFile.Size = new Size(181, 23);
