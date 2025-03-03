@@ -81,7 +81,7 @@
                 // Add files
                 foreach(string file in Directory.GetFiles(path))
                 {
-                    var imageKey = "file";
+                    string imageKey = "file";
 
                     if(file.EndsWith(".jar", StringComparison.OrdinalIgnoreCase))
                     {

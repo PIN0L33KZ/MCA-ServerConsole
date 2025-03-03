@@ -4,7 +4,6 @@ using System.Runtime.Versioning;
 using MCA_ServerConsole.Classes;
 using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
-using Windows.Media.Playback;
 
 namespace MCA_ServerConsole.Forms
 {
@@ -390,7 +389,7 @@ namespace MCA_ServerConsole.Forms
                 {
                     if(path.Contains(".png"))
                     {
-                        Process.Start(new ProcessStartInfo()
+                        _ = Process.Start(new ProcessStartInfo()
                         {
                             FileName = path,
                             UseShellExecute = true,
@@ -398,9 +397,9 @@ namespace MCA_ServerConsole.Forms
 
                         return;
                     }
-                    else if(path.Contains(".jar"))
+                    else if(!(path.EndsWith(".json") || path.EndsWith(".png") || path.EndsWith(".properties") || path.EndsWith(".log") || path.EndsWith(".txt")))
                     {
-                        MessageBox.Show("This file can't be opened within this application.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show("This file can't be opened within this application.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         return;
                     }

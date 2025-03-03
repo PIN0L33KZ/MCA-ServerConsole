@@ -201,7 +201,7 @@ namespace MCA_ServerConsole
                 Settings.Default.ServerImage = ImageHelper.ConvertImageToString(new Bitmap(PBX_ServerImage.Image, new Size(64, 64)));
 
                 // Save server Image
-                var bmp = new Bitmap(PBX_ServerImage.Image, new Size(64, 64));
+                Bitmap bmp = new(PBX_ServerImage.Image, new Size(64, 64));
                 bmp.Save(Properties.Settings.Default.ServerDirectory + @"\server-icon.png");
 
                 Settings.Default.Save();

@@ -1,5 +1,4 @@
-﻿using System.Windows.Forms;
-using Microsoft.Web.WebView2.Core;
+﻿using Microsoft.Web.WebView2.Core;
 
 namespace MCA_ServerConsole.Dialogs
 {
