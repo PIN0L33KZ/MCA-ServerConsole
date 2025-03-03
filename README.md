@@ -16,7 +16,11 @@ Welcome to the **Minecraft Advanced Server Console** repository! This powerful a
 
 Build in Code Editor with Syntax Highlights for .properties .json and logfiles!
 
-![image](https://github.com/user-attachments/assets/dd876f69-441a-4c5e-8f38-7728b6719c72)
+![grafik](https://github.com/user-attachments/assets/4d5ff1ba-5298-4268-be1d-cf4f56302ff8)
+![grafik](https://github.com/user-attachments/assets/163c99df-d96f-4c6d-ba32-9db7b2cc9622)
+![grafik](https://github.com/user-attachments/assets/1e42c292-2758-43d8-9a77-230a0f46007c)
+
+
 
 
 ---
