@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using MCA_ServerConsole.Classes;
@@ -22,7 +23,7 @@ namespace MCA_ServerConsole.Forms
             InitializeComponent();
 
             // Initialize Handler
-            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand);
+            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole);
             _javaProcessHandler = new JavaProcessHandler(HandleKeyword);
             _fileSystemManager = new FileSystemManager(UpdateDirectoryStructure);
 
@@ -41,8 +42,11 @@ namespace MCA_ServerConsole.Forms
             try
             {
                 PBX_ServerImage.Image = ImageHelper.ConvertStringToImage(Properties.Settings.Default.ServerImage);
-                LBL_ServerName.Text = LBL_ServerName.Text.Replace(@"{name}", Properties.Settings.Default.ServerName);
+                LBL_ServerName.Text = LBL_ServerName.Text.Replace(@"$serverName", Properties.Settings.Default.ServerName);
                 NUD_ServerRam.Maximum = SystemHelper.GetAvailableRAM();
+                TSL_ServerStatus.Text = "Server stopped";
+                TSL_ServerStatus.Image = Properties.Resources.stopped;
+                TSL_AppVersion.Text = $"v.{Assembly.GetExecutingAssembly().GetName().Version}";
 
                 LoadDirectoryStructure();
                 LoadJarFiles(Properties.Settings.Default.ServerDirectory);
@@ -180,8 +184,10 @@ namespace MCA_ServerConsole.Forms
 
                 RTB_ServerLog.Clear();
 
+                string javaGui = CHX_ShowJavaConsole.Checked ? "" : "nogui";
+
                 await _javaProcessHandler.StartJavaProcessAsync(
-                    $"-Xmx{NUD_ServerRam.Value}G -jar {CBX_JarFile.SelectedItem} nogui",
+                    $"-Xmx{NUD_ServerRam.Value}G -jar {CBX_JarFile.SelectedItem} {javaGui}",
                     AppendLog,
                     error => AppendLog($"[ERROR] {error}")
                 );
@@ -345,6 +351,7 @@ namespace MCA_ServerConsole.Forms
 
         private void BTN_SendCommand_Click(object sender, EventArgs e)
         {
+            TBX_CommandText.Text = TBX_CommandText.Text.Replace("/", ""); // Remove slashes
             _ = TBX_CommandText.Text.Trim();
             if(TBX_CommandText.Text.Length == 0)
             {
@@ -460,9 +467,45 @@ namespace MCA_ServerConsole.Forms
                 _ = MessageBox.Show($"Error deleting file or folder: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void BTN_SaveOutput_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sFD = new()
+            {
+                Filter = "Text file (*.txt) | *.txt",
+                Title = "Save console output",
+                FileName = $"MCAC_Output_{DateTime.Now:yyyy-MM-dd}_{DateTime.Now:HH-mm}"
+            };
+
+            if(sFD.ShowDialog() == DialogResult.OK)
+            {
+                WriteFileContent(sFD.FileName, RTB_ServerLog.Text);
+            }
+        }
+        private static void WriteFileContent(string filePath, string content)
+        {
+            try
+            {
+                File.WriteAllText(filePath, content.Trim());
+            }
+            catch(UnauthorizedAccessException ex)
+            {
+                _ = MessageBox.Show($"Access to write the file is denied: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch(Exception ex)
+            {
+                _ = MessageBox.Show($"Error writing to file: {ex.Message}",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void TMI_SaveOutput_Click(object sender, EventArgs e)
+        {
+            BTN_SaveOutput.PerformClick();
+        }
     }
 }
 
 /// ToDo:
-/// Add Save Log button
 /// Context menu stips to open up player and settings manager etc.

@@ -9,13 +9,13 @@ namespace MCA_ServerConsole.Dialogs
         private FastColoredTextBox FCT_CodeEditor;
 
         // Define styles once and reuse them
-        private readonly TextStyle CommentStyle = new(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
-        private readonly TextStyle KeyStyle = new(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
-        private readonly TextStyle ValueStyle = new(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Regular);
-        private readonly TextStyle EscapeStyle = new(new SolidBrush(Color.FromArgb(22, 160, 133)), null, FontStyle.Bold);
-        private readonly TextStyle TimeStyle = new(new SolidBrush(Color.FromArgb(41, 128, 185)), null, FontStyle.Bold);
-        private readonly TextStyle LogLevelStyle = new(new SolidBrush(Color.FromArgb(231, 76, 60)), null, FontStyle.Bold);
-        private readonly TextStyle ThreadStyle = new(new SolidBrush(Color.FromArgb(39, 174, 96)), null, FontStyle.Italic);
+        private readonly TextStyle CommentStyle = new(new SolidBrush(Color.FromArgb(16, 172, 132)), null, FontStyle.Italic);
+        private readonly TextStyle KeyStyle = new(new SolidBrush(Color.FromArgb(95, 39, 205)), null, FontStyle.Bold);
+        private readonly TextStyle ValueStyle = new(new SolidBrush(Color.FromArgb(238, 82, 83)), null, FontStyle.Regular);
+        private readonly TextStyle EscapeStyle = new(new SolidBrush(Color.FromArgb(46, 134, 222)), null, FontStyle.Bold);
+        private readonly TextStyle TimeStyle = new(new SolidBrush(Color.FromArgb(46, 134, 222)), null, FontStyle.Bold);
+        private readonly TextStyle LogLevelStyle = new(new SolidBrush(Color.FromArgb(255, 159, 67)), null, FontStyle.Bold);
+        private readonly TextStyle ThreadStyle = new(new SolidBrush(Color.FromArgb(16, 172, 132)), null, FontStyle.Italic);
 
         public FRM_CodeEditor(string filePath)
         {

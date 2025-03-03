@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_Console));
             PNL_Top = new Panel();
+            CHX_ShowJavaConsole = new CheckBox();
             NUD_ServerRam = new NumericUpDown();
             LBL_ServerRamUnit = new Label();
             LBL_ServerRam = new Label();
@@ -56,10 +57,14 @@
             TSL_GameVersion = new ToolStripLabel();
             TSL_PortStatus = new ToolStripLabel();
             TSL_DefaultGamemode = new ToolStripLabel();
+            TSL_AppVersion = new ToolStripLabel();
             PNL_Fill_Top = new Panel();
+            BTN_SaveOutput = new Button();
             BTN_StopServer = new Button();
             BTN_ReloadServer = new Button();
             BTN_StartServer = new Button();
+            CMS_RTB_ServerLog = new ContextMenuStrip(components);
+            TMI_SaveOutput = new ToolStripMenuItem();
             PNL_Top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_ServerRam).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
@@ -70,10 +75,13 @@
             PNL_Fill_Bottom.SuspendLayout();
             TSP_StatusBar.SuspendLayout();
             PNL_Fill_Top.SuspendLayout();
+            CMS_RTB_ServerLog.SuspendLayout();
             SuspendLayout();
             // 
             // PNL_Top
             // 
+            PNL_Top.BorderStyle = BorderStyle.Fixed3D;
+            PNL_Top.Controls.Add(CHX_ShowJavaConsole);
             PNL_Top.Controls.Add(NUD_ServerRam);
             PNL_Top.Controls.Add(LBL_ServerRamUnit);
             PNL_Top.Controls.Add(LBL_ServerRam);
@@ -87,23 +95,34 @@
             PNL_Top.Size = new Size(1010, 45);
             PNL_Top.TabIndex = 0;
             // 
+            // CHX_ShowJavaConsole
+            // 
+            CHX_ShowJavaConsole.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CHX_ShowJavaConsole.AutoSize = true;
+            CHX_ShowJavaConsole.Location = new Point(507, 11);
+            CHX_ShowJavaConsole.Name = "CHX_ShowJavaConsole";
+            CHX_ShowJavaConsole.Size = new Size(123, 19);
+            CHX_ShowJavaConsole.TabIndex = 4;
+            CHX_ShowJavaConsole.Text = "Show java console";
+            CHX_ShowJavaConsole.UseVisualStyleBackColor = true;
+            // 
             // NUD_ServerRam
             // 
             NUD_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             NUD_ServerRam.Increment = new decimal(new int[] { 5, 0, 0, 0 });
-            NUD_ServerRam.Location = new Point(733, 11);
+            NUD_ServerRam.Location = new Point(729, 9);
             NUD_ServerRam.Maximum = new decimal(new int[] { 99, 0, 0, 0 });
             NUD_ServerRam.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NUD_ServerRam.Name = "NUD_ServerRam";
             NUD_ServerRam.Size = new Size(33, 23);
-            NUD_ServerRam.TabIndex = 5;
+            NUD_ServerRam.TabIndex = 0;
             NUD_ServerRam.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // LBL_ServerRamUnit
             // 
             LBL_ServerRamUnit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_ServerRamUnit.AutoSize = true;
-            LBL_ServerRamUnit.Location = new Point(765, 14);
+            LBL_ServerRamUnit.Location = new Point(761, 12);
             LBL_ServerRamUnit.Name = "LBL_ServerRamUnit";
             LBL_ServerRamUnit.Size = new Size(22, 15);
             LBL_ServerRamUnit.TabIndex = 4;
@@ -113,7 +132,7 @@
             // 
             LBL_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_ServerRam.AutoSize = true;
-            LBL_ServerRam.Location = new Point(640, 14);
+            LBL_ServerRam.Location = new Point(636, 12);
             LBL_ServerRam.Name = "LBL_ServerRam";
             LBL_ServerRam.Size = new Size(87, 15);
             LBL_ServerRam.TabIndex = 4;
@@ -123,7 +142,7 @@
             // 
             LBL_JarFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_JarFile.AutoSize = true;
-            LBL_JarFile.Location = new Point(797, 14);
+            LBL_JarFile.Location = new Point(793, 12);
             LBL_JarFile.Name = "LBL_JarFile";
             LBL_JarFile.Size = new Size(74, 15);
             LBL_JarFile.TabIndex = 4;
@@ -135,17 +154,17 @@
             CBX_JarFile.Cursor = Cursors.Hand;
             CBX_JarFile.DropDownStyle = ComboBoxStyle.DropDownList;
             CBX_JarFile.FormattingEnabled = true;
-            CBX_JarFile.Location = new Point(877, 11);
+            CBX_JarFile.Location = new Point(873, 9);
             CBX_JarFile.Name = "CBX_JarFile";
             CBX_JarFile.Size = new Size(121, 23);
-            CBX_JarFile.TabIndex = 3;
+            CBX_JarFile.TabIndex = 1;
             // 
             // PBX_ServerImage
             // 
             PBX_ServerImage.Dock = DockStyle.Left;
             PBX_ServerImage.Location = new Point(0, 0);
             PBX_ServerImage.Name = "PBX_ServerImage";
-            PBX_ServerImage.Size = new Size(45, 45);
+            PBX_ServerImage.Size = new Size(45, 41);
             PBX_ServerImage.SizeMode = PictureBoxSizeMode.Zoom;
             PBX_ServerImage.TabIndex = 2;
             PBX_ServerImage.TabStop = false;
@@ -155,11 +174,11 @@
             LBL_ServerName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             LBL_ServerName.AutoEllipsis = true;
             LBL_ServerName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            LBL_ServerName.Location = new Point(51, 11);
+            LBL_ServerName.Location = new Point(51, 9);
             LBL_ServerName.Name = "LBL_ServerName";
-            LBL_ServerName.Size = new Size(566, 23);
+            LBL_ServerName.Size = new Size(450, 23);
             LBL_ServerName.TabIndex = 0;
-            LBL_ServerName.Text = "Server: {name}";
+            LBL_ServerName.Text = "Server: $serverName";
             // 
             // TRV_Directory
             // 
@@ -277,7 +296,7 @@
             BTN_SendCommand.Location = new Point(632, 12);
             BTN_SendCommand.Name = "BTN_SendCommand";
             BTN_SendCommand.Size = new Size(83, 23);
-            BTN_SendCommand.TabIndex = 2;
+            BTN_SendCommand.TabIndex = 1;
             BTN_SendCommand.Text = "Send";
             BTN_SendCommand.UseVisualStyleBackColor = true;
             BTN_SendCommand.Click += BTN_SendCommand_Click;
@@ -285,18 +304,22 @@
             // TBX_CommandText
             // 
             TBX_CommandText.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TBX_CommandText.AutoCompleteCustomSource.AddRange(new string[] { "/ability", "/advancement", "/attribute", "/ban", "/ban-ip", "/banlist", "/bossbar", "/camerashake", "/changesetting", "/clear", "/clearspawnpoint", "/clone", "/connect", "/data", "/datapack", "/daylock", "/debug", "/dedicatedwsserver", "/defaultgamemode", "/deop", "/dialogue", "/difficulty", "/effect", "/enchant", "/event", "/execute", "/experience", "/fill", "/fillbiome", "/fog", "/forceload", "/function", "/gamemode", "/gamerule", "/give", "/help", "/immutableworld", "/item", "/jfr", "/kick", "/kill", "/list", "/locate", "/loot", "/me", "/mobevent", "/msg", "/music", "/op", "/ops", "/pardon", "/pardon-ip", "/particle", "/perf", "/permission", "/place", "/playanimation", "/playsound", "/publish", "/random", "/recipe", "/reload", "/remove", "/replaceitem", "/return", "/ride", "/save", "/save-all", "/save-off", "/save-on", "/say", "/schedule", "/scoreboard", "/script", "/scriptevent", "/seed", "/setblock", "/setidletimeout", "/setmaxplayers", "/setworldspawn", "/spawnpoint", "/spectate", "/spreadplayers", "/stop", "/stopsound", "/summon", "/tag", "/tell", "/tellraw", "/testfor", "/testforblock", "/testforblocks", "/tickingarea", "/time", "/title", "/titleraw", "/toggledownfall", "/tp", "/videostream", "/videostreamaction", "/weather", "/whitelist", "/worldborder", "/worldbuilder", "/wsserver", "/xp" });
+            TBX_CommandText.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            TBX_CommandText.CharacterCasing = CharacterCasing.Lower;
             TBX_CommandText.Enabled = false;
             TBX_CommandText.Location = new Point(9, 12);
             TBX_CommandText.Name = "TBX_CommandText";
+            TBX_CommandText.PlaceholderText = "Send command";
             TBX_CommandText.Size = new Size(617, 23);
-            TBX_CommandText.TabIndex = 1;
+            TBX_CommandText.TabIndex = 0;
             TBX_CommandText.KeyDown += TBX_CommandText_KeyDown;
             // 
             // TSP_StatusBar
             // 
             TSP_StatusBar.Dock = DockStyle.Bottom;
             TSP_StatusBar.GripStyle = ToolStripGripStyle.Hidden;
-            TSP_StatusBar.Items.AddRange(new ToolStripItem[] { TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode });
+            TSP_StatusBar.Items.AddRange(new ToolStripItem[] { TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, TSL_AppVersion });
             TSP_StatusBar.Location = new Point(0, 46);
             TSP_StatusBar.Name = "TSP_StatusBar";
             TSP_StatusBar.Size = new Size(724, 25);
@@ -306,8 +329,8 @@
             // 
             TSL_ServerStatus.Image = Properties.Resources.stopped;
             TSL_ServerStatus.Name = "TSL_ServerStatus";
-            TSL_ServerStatus.Size = new Size(101, 22);
-            TSL_ServerStatus.Text = "Server stopped";
+            TSL_ServerStatus.Size = new Size(87, 22);
+            TSL_ServerStatus.Text = "$ServerState";
             // 
             // TSL_GameVersion
             // 
@@ -324,8 +347,17 @@
             TSL_DefaultGamemode.Name = "TSL_DefaultGamemode";
             TSL_DefaultGamemode.Size = new Size(0, 22);
             // 
+            // TSL_AppVersion
+            // 
+            TSL_AppVersion.Alignment = ToolStripItemAlignment.Right;
+            TSL_AppVersion.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            TSL_AppVersion.Name = "TSL_AppVersion";
+            TSL_AppVersion.Size = new Size(73, 22);
+            TSL_AppVersion.Text = "$AppVersion";
+            // 
             // PNL_Fill_Top
             // 
+            PNL_Fill_Top.Controls.Add(BTN_SaveOutput);
             PNL_Fill_Top.Controls.Add(BTN_StopServer);
             PNL_Fill_Top.Controls.Add(BTN_ReloadServer);
             PNL_Fill_Top.Controls.Add(BTN_StartServer);
@@ -335,6 +367,19 @@
             PNL_Fill_Top.Size = new Size(724, 45);
             PNL_Fill_Top.TabIndex = 0;
             // 
+            // BTN_SaveOutput
+            // 
+            BTN_SaveOutput.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BTN_SaveOutput.Cursor = Cursors.Hand;
+            BTN_SaveOutput.Enabled = false;
+            BTN_SaveOutput.Location = new Point(636, 11);
+            BTN_SaveOutput.Name = "BTN_SaveOutput";
+            BTN_SaveOutput.Size = new Size(83, 23);
+            BTN_SaveOutput.TabIndex = 3;
+            BTN_SaveOutput.Text = "Save Output";
+            BTN_SaveOutput.UseVisualStyleBackColor = true;
+            BTN_SaveOutput.Click += BTN_SaveOutput_Click;
+            // 
             // BTN_StopServer
             // 
             BTN_StopServer.Anchor = AnchorStyles.Top;
@@ -343,7 +388,7 @@
             BTN_StopServer.Location = new Point(410, 11);
             BTN_StopServer.Name = "BTN_StopServer";
             BTN_StopServer.Size = new Size(83, 23);
-            BTN_StopServer.TabIndex = 0;
+            BTN_StopServer.TabIndex = 2;
             BTN_StopServer.Text = "Stop Server";
             BTN_StopServer.UseVisualStyleBackColor = true;
             BTN_StopServer.Click += BTN_StopServer_Click;
@@ -356,7 +401,7 @@
             BTN_ReloadServer.Location = new Point(321, 11);
             BTN_ReloadServer.Name = "BTN_ReloadServer";
             BTN_ReloadServer.Size = new Size(83, 23);
-            BTN_ReloadServer.TabIndex = 0;
+            BTN_ReloadServer.TabIndex = 1;
             BTN_ReloadServer.Text = "Reload Server";
             BTN_ReloadServer.UseVisualStyleBackColor = true;
             BTN_ReloadServer.Click += BTN_ReloadServer_Click;
@@ -373,6 +418,20 @@
             BTN_StartServer.UseVisualStyleBackColor = true;
             BTN_StartServer.Click += BTN_StartServer_Click;
             // 
+            // CMS_RTB_ServerLog
+            // 
+            CMS_RTB_ServerLog.Items.AddRange(new ToolStripItem[] { TMI_SaveOutput });
+            CMS_RTB_ServerLog.Name = "CMS_TRV_Directory";
+            CMS_RTB_ServerLog.Size = new Size(138, 26);
+            // 
+            // TMI_SaveOutput
+            // 
+            TMI_SaveOutput.Image = Properties.Resources.save;
+            TMI_SaveOutput.Name = "TMI_SaveOutput";
+            TMI_SaveOutput.Size = new Size(137, 22);
+            TMI_SaveOutput.Text = "Save output";
+            TMI_SaveOutput.Click += TMI_SaveOutput_Click;
+            // 
             // FRM_Console
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -382,7 +441,7 @@
             Controls.Add(PNL_Left);
             Controls.Add(PNL_Top);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(737, 383);
+            MinimumSize = new Size(872, 449);
             Name = "FRM_Console";
             Text = "Minecraft Advanced Server Console :: Console";
             FormClosing += FRM_Console_FormClosing;
@@ -399,6 +458,7 @@
             TSP_StatusBar.ResumeLayout(false);
             TSP_StatusBar.PerformLayout();
             PNL_Fill_Top.ResumeLayout(false);
+            CMS_RTB_ServerLog.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -434,5 +494,12 @@
         private Label LBL_ServerRam;
         private NumericUpDown NUD_ServerRam;
         private Label LBL_ServerRamUnit;
+        private ToolStripLabel TSL_AppVersion;
+        private Button BTN_SaveOutput;
+        private ContextMenuStrip CMS_RTB_ServerLog;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem TMI_SaveOutput;
+        private CheckBox CHX_ShowJavaConsole;
     }
 }

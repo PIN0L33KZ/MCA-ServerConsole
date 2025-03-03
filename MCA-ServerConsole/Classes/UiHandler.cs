@@ -3,7 +3,7 @@ using MCA_ServerConsole.HelperClasses;
 
 namespace MCA_ServerConsole.Classes
 {
-    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton)
+    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton, Button saveConsoleOutput, RichTextBox serverLog, ContextMenuStrip contextMenuStrip, CheckBox javaConsole)
     {
         private readonly ToolStripLabel _serverStatusLabel = serverStatusLabel;
         private readonly ToolStripLabel _gameVersionLabel = gameVersionLabel;
@@ -11,11 +11,15 @@ namespace MCA_ServerConsole.Classes
         private readonly ToolStripLabel _defaultGamemodeLabel = defaultGamemodeLabel;
         private readonly Button _startServerButton = startServerButton;
         private readonly Button _reloadServerButton = reloadServerButton;
-        private readonly Button _stopServerbutton = stopServerButton;
+        private readonly Button _stopServerButton = stopServerButton;
         private readonly ComboBox _jarFileSelectionComboBox = jarFileSelectionComboBox;
         private readonly NumericUpDown _serverRam = serverRam;
         private readonly TextBox _commandTextBox = commandTextBox;
         private readonly Button _sendCommandButton = sendCommandButton;
+        private readonly Button _saveConsoleOutput = saveConsoleOutput;
+        private readonly RichTextBox _serverLog = serverLog;
+        private readonly ContextMenuStrip _menuStrip = contextMenuStrip;
+        private readonly CheckBox _javaConsole = javaConsole;
 
         public void UpdateUI(string keyword, string output)
         {
@@ -26,6 +30,7 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server stopped";
                     _serverStatusLabel.Image = Properties.Resources.stopped;
                     _startServerButton.Enabled = true;
+                    _javaConsole.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = true;
                     _serverRam.Enabled = true;
 
@@ -49,10 +54,12 @@ namespace MCA_ServerConsole.Classes
                     if(MessageBox.Show("There's already a server process running in the background, cancel running task?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     {
                         _startServerButton.Enabled = true;
+                        _javaConsole.Enabled = true;
                         return;
                     }
                     JavaProcessHandler.KillAlreadyRunningJavaProcesses();
                     _startServerButton.Enabled = true;
+                    _javaConsole.Enabled = true;
                     _startServerButton.PerformClick();
                     break;
 
@@ -61,8 +68,11 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server starting... ";
                     _serverStatusLabel.Image = Properties.Resources.starting;
                     _startServerButton.Enabled = false;
+                    _javaConsole.Enabled = false;
                     _reloadServerButton.Enabled = false;
-                    _stopServerbutton.Enabled = false;
+                    _stopServerButton.Enabled = false;
+                    _saveConsoleOutput.Enabled = false;
+                    _serverLog.ContextMenuStrip = null;
                     _jarFileSelectionComboBox.Enabled = false;
                     _serverRam.Enabled = false;
                     break;
@@ -87,8 +97,11 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server running |";
                     _serverStatusLabel.Image = Properties.Resources.running;
                     _startServerButton.Enabled = false;
+                    _javaConsole.Enabled = false;
                     _reloadServerButton.Enabled = true;
-                    _stopServerbutton.Enabled = true;
+                    _stopServerButton.Enabled = true;
+                    _saveConsoleOutput.Enabled = false;
+                    _serverLog.ContextMenuStrip = null;
                     _jarFileSelectionComboBox.Enabled = false;
                     _serverRam.Enabled = false;
                     _commandTextBox.Enabled = true;
@@ -100,8 +113,11 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server stopped";
                     _serverStatusLabel.Image = Properties.Resources.stopped;
                     _startServerButton.Enabled = true;
+                    _javaConsole.Enabled = true;
                     _reloadServerButton.Enabled = false;
-                    _stopServerbutton.Enabled = false;
+                    _stopServerButton.Enabled = false;
+                    _saveConsoleOutput.Enabled = true;
+                    _serverLog.ContextMenuStrip = _menuStrip;
                     _jarFileSelectionComboBox.Enabled = true;
                     _serverRam.Enabled = true;
                     _gameVersionLabel.Text = "";

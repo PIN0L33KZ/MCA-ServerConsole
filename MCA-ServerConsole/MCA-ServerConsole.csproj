@@ -12,6 +12,11 @@
     <ApplicationIcon>app_icon.ico</ApplicationIcon>
     <EnableWindowsFormsHighDpiAutoResizing>true</EnableWindowsFormsHighDpiAutoResizing>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyVersion>0.0.2.5</AssemblyVersion>
+    <FileVersion>0.0.2.5</FileVersion>
+    <Description>A powerful application providing a Minecraft server console, along with tools for server and player management, monitoring, and server creation </Description>
+    <Copyright>PIN0L33KZ</Copyright>
+    <PackageProjectUrl>https://github.com/PIN0L33KZ/MCA-ServerConsole</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

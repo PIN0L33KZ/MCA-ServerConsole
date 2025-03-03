@@ -37,6 +37,7 @@
             // 
             // PNL_Fill
             // 
+            PNL_Fill.BorderStyle = BorderStyle.FixedSingle;
             PNL_Fill.Dock = DockStyle.Fill;
             PNL_Fill.Location = new Point(0, 0);
             PNL_Fill.Name = "PNL_Fill";
