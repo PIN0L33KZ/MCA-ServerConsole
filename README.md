@@ -2,6 +2,12 @@
 
 ### (W)ork (i)n (P)rogress! ⚠️
 
+## Known issues:
+The API results for downloading *.jar files are currently unavailable (API is down, unsupported, or EOL?).
+
+_A transition to Mojang's official Piston API is planned!_
+
+
 ## Overview
 
 Welcome to the **Minecraft Advanced Server Console** repository! This powerful application serves as a complete solution for managing your Minecraft server. Whether you're setting up a new server, monitoring its performance, or using the console for administrative tasks, this tool has got you covered.
