@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using System.Windows.Forms;
+using Microsoft.Web.WebView2.Core;
 
 namespace MCA_ServerConsole.Dialogs
 {
@@ -23,6 +24,8 @@ namespace MCA_ServerConsole.Dialogs
                 WBV_EulaText.CoreWebView2.Navigate(@"https://aka.ms/MinecraftEULA");
                 WBV_EulaText.ZoomFactor = 0.5;
                 await WBV_EulaText.CoreWebView2.Profile.ClearBrowsingDataAsync(CoreWebView2BrowsingDataKinds.Cookies);
+                WBV_EulaText.CoreWebView2.ContextMenuRequested += CoreWebView2_ContextMenuRequested;
+                WBV_EulaText.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowsRequested;
             }
             catch(Exception ex)
             {
@@ -45,6 +48,16 @@ namespace MCA_ServerConsole.Dialogs
             {
                 Console.WriteLine($"Error while writing to eula.txt: {ex.Message}");
             }
+        }
+
+        private void CoreWebView2_ContextMenuRequested(object sender, CoreWebView2ContextMenuRequestedEventArgs e)
+        {
+            e.Handled = true; // Disable the context menu
+        }
+
+        private void CoreWebView2_NewWindowsRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            e.Handled = true; // Ensure no new Webview instances
         }
     }
 }

@@ -24,8 +24,10 @@ namespace MCA_ServerConsole
                     if(setupDialogResult != DialogResult.OK)
                     {
                         // User cancelled the setup
-                        _ = MessageBox.Show(this, "Setup was cancelled. The application cannot continue without a server directory.",
-                            "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        var msgResult = MessageBox.Show(this, "Setup was cancelled. The application cannot continue without a server directory.\nExit now?",
+                            "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if(msgResult != DialogResult.No)
+                            Environment.Exit(0);
                         continue;
                     }
                 }

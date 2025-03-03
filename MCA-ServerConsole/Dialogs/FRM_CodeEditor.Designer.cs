@@ -72,6 +72,7 @@
             Controls.Add(PNL_Fill);
             Controls.Add(PNL_Bottom);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(816, 489);
             Name = "FRM_CodeEditor";
             Text = "Minecraft Advanced Server Console :: Code Editor";
             FormClosing += FRM_CodeEditor_FormClosing;

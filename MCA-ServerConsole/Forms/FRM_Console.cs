@@ -4,6 +4,7 @@ using System.Runtime.Versioning;
 using MCA_ServerConsole.Classes;
 using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
+using Windows.Media.Playback;
 
 namespace MCA_ServerConsole.Forms
 {
@@ -22,7 +23,7 @@ namespace MCA_ServerConsole.Forms
             InitializeComponent();
 
             // Initialize Handler
-            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, TBX_CommandText, BTN_SendCommand);
+            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand);
             _javaProcessHandler = new JavaProcessHandler(HandleKeyword);
             _fileSystemManager = new FileSystemManager(UpdateDirectoryStructure);
 
@@ -42,6 +43,7 @@ namespace MCA_ServerConsole.Forms
             {
                 PBX_ServerImage.Image = ImageHelper.ConvertStringToImage(Properties.Settings.Default.ServerImage);
                 LBL_ServerName.Text = LBL_ServerName.Text.Replace(@"{name}", Properties.Settings.Default.ServerName);
+                NUD_ServerRam.Maximum = SystemHelper.GetAvailableRAM();
 
                 LoadDirectoryStructure();
                 LoadJarFiles(Properties.Settings.Default.ServerDirectory);
@@ -180,7 +182,7 @@ namespace MCA_ServerConsole.Forms
                 RTB_ServerLog.Clear();
 
                 await _javaProcessHandler.StartJavaProcessAsync(
-                    $"-jar {CBX_JarFile.SelectedItem} nogui",
+                    $"-Xmx{NUD_ServerRam.Value}G -jar {CBX_JarFile.SelectedItem} nogui",
                     AppendLog,
                     error => AppendLog($"[ERROR] {error}")
                 );
@@ -386,6 +388,23 @@ namespace MCA_ServerConsole.Forms
                 string? path = selectedNode.Tag.ToString();
                 if(File.Exists(path))
                 {
+                    if(path.Contains(".png"))
+                    {
+                        Process.Start(new ProcessStartInfo()
+                        {
+                            FileName = path,
+                            UseShellExecute = true,
+                        });
+
+                        return;
+                    }
+                    else if(path.Contains(".jar"))
+                    {
+                        MessageBox.Show("This file can't be opened within this application.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        return;
+                    }
+
                     // Open file in default editor
                     FRM_CodeEditor codeEditorForm = new(path);
                     _ = codeEditorForm.ShowDialog();

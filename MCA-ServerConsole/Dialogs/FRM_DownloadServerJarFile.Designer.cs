@@ -117,6 +117,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FRM_DownloadServerJarFile";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Minecraft Advanced Server Console :: Java File";

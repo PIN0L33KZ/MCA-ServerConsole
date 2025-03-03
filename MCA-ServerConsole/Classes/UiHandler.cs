@@ -3,7 +3,7 @@ using MCA_ServerConsole.HelperClasses;
 
 namespace MCA_ServerConsole.Classes
 {
-    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, TextBox commandTextBox, Button sendCommandButton)
+    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton)
     {
         private readonly ToolStripLabel _serverStatusLabel = serverStatusLabel;
         private readonly ToolStripLabel _gameVersionLabel = gameVersionLabel;
@@ -13,6 +13,7 @@ namespace MCA_ServerConsole.Classes
         private readonly Button _reloadServerButton = reloadServerButton;
         private readonly Button _stopServerbutton = stopServerButton;
         private readonly ComboBox _jarFileSelectionComboBox = jarFileSelectionComboBox;
+        private readonly NumericUpDown _serverRam = serverRam;
         private readonly TextBox _commandTextBox = commandTextBox;
         private readonly Button _sendCommandButton = sendCommandButton;
 
@@ -26,6 +27,7 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Image = Properties.Resources.stopped;
                     _startServerButton.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = true;
+                    _serverRam.Enabled = true;
 
                     bool agreed = false;
 
@@ -62,6 +64,7 @@ namespace MCA_ServerConsole.Classes
                     _reloadServerButton.Enabled = false;
                     _stopServerbutton.Enabled = false;
                     _jarFileSelectionComboBox.Enabled = false;
+                    _serverRam.Enabled = false;
                     break;
 
                 // Contains game version
@@ -87,6 +90,7 @@ namespace MCA_ServerConsole.Classes
                     _reloadServerButton.Enabled = true;
                     _stopServerbutton.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = false;
+                    _serverRam.Enabled = false;
                     _commandTextBox.Enabled = true;
                     _sendCommandButton.Enabled = true;
                     break;
@@ -99,6 +103,7 @@ namespace MCA_ServerConsole.Classes
                     _reloadServerButton.Enabled = false;
                     _stopServerbutton.Enabled = false;
                     _jarFileSelectionComboBox.Enabled = true;
+                    _serverRam.Enabled = true;
                     _gameVersionLabel.Text = "";
                     _portStatusLabel.Text = "";
                     _defaultGamemodeLabel.Text = "";

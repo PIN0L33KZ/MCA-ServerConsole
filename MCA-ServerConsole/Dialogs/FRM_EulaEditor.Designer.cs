@@ -38,7 +38,7 @@
             // 
             // WBV_EulaText
             // 
-            WBV_EulaText.AllowExternalDrop = true;
+            WBV_EulaText.AllowExternalDrop = false;
             WBV_EulaText.CreationProperties = null;
             WBV_EulaText.DefaultBackgroundColor = Color.White;
             WBV_EulaText.Dock = DockStyle.Fill;
@@ -80,6 +80,7 @@
             Controls.Add(WBV_EulaText);
             Controls.Add(PNL_Bottom);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(816, 489);
             Name = "FRM_EulaEditor";
             Text = "Minecraft Advanced Server Console :: EULA Editor";
             Load += FRM_EulaEditor_Load;

@@ -81,7 +81,20 @@
                 // Add files
                 foreach(string file in Directory.GetFiles(path))
                 {
-                    string imageKey = file.EndsWith(".jar", StringComparison.OrdinalIgnoreCase) ? "javaFile" : "file";
+                    var imageKey = "file";
+
+                    if(file.EndsWith(".jar", StringComparison.OrdinalIgnoreCase))
+                    {
+                        imageKey = "javaFile";
+                    }
+                    else if(file.EndsWith(".properties", StringComparison.OrdinalIgnoreCase))
+                    {
+                        imageKey = "settingsFile";
+                    }
+                    else if(file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                    {
+                        imageKey = "imageFile";
+                    }
 
                     TreeNode fileNode = new(Path.GetFileName(file))
                     {

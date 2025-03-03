@@ -31,6 +31,9 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_Console));
             PNL_Top = new Panel();
+            NUD_ServerRam = new NumericUpDown();
+            LBL_ServerRamUnit = new Label();
+            LBL_ServerRam = new Label();
             LBL_JarFile = new Label();
             CBX_JarFile = new ComboBox();
             PBX_ServerImage = new PictureBox();
@@ -58,6 +61,7 @@
             BTN_ReloadServer = new Button();
             BTN_StartServer = new Button();
             PNL_Top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_ServerRam).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
             CMS_TRV_Directory.SuspendLayout();
             PNL_Left.SuspendLayout();
@@ -70,6 +74,9 @@
             // 
             // PNL_Top
             // 
+            PNL_Top.Controls.Add(NUD_ServerRam);
+            PNL_Top.Controls.Add(LBL_ServerRamUnit);
+            PNL_Top.Controls.Add(LBL_ServerRam);
             PNL_Top.Controls.Add(LBL_JarFile);
             PNL_Top.Controls.Add(CBX_JarFile);
             PNL_Top.Controls.Add(PBX_ServerImage);
@@ -79,6 +86,38 @@
             PNL_Top.Name = "PNL_Top";
             PNL_Top.Size = new Size(1010, 45);
             PNL_Top.TabIndex = 0;
+            // 
+            // NUD_ServerRam
+            // 
+            NUD_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            NUD_ServerRam.Increment = new decimal(new int[] { 5, 0, 0, 0 });
+            NUD_ServerRam.Location = new Point(733, 11);
+            NUD_ServerRam.Maximum = new decimal(new int[] { 99, 0, 0, 0 });
+            NUD_ServerRam.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            NUD_ServerRam.Name = "NUD_ServerRam";
+            NUD_ServerRam.Size = new Size(33, 23);
+            NUD_ServerRam.TabIndex = 5;
+            NUD_ServerRam.Value = new decimal(new int[] { 2, 0, 0, 0 });
+            // 
+            // LBL_ServerRamUnit
+            // 
+            LBL_ServerRamUnit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            LBL_ServerRamUnit.AutoSize = true;
+            LBL_ServerRamUnit.Location = new Point(765, 14);
+            LBL_ServerRamUnit.Name = "LBL_ServerRamUnit";
+            LBL_ServerRamUnit.Size = new Size(22, 15);
+            LBL_ServerRamUnit.TabIndex = 4;
+            LBL_ServerRamUnit.Text = "GB";
+            // 
+            // LBL_ServerRam
+            // 
+            LBL_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            LBL_ServerRam.AutoSize = true;
+            LBL_ServerRam.Location = new Point(640, 14);
+            LBL_ServerRam.Name = "LBL_ServerRam";
+            LBL_ServerRam.Size = new Size(87, 15);
+            LBL_ServerRam.TabIndex = 4;
+            LBL_ServerRam.Text = "Server memory";
             // 
             // LBL_JarFile
             // 
@@ -118,7 +157,7 @@
             LBL_ServerName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LBL_ServerName.Location = new Point(51, 11);
             LBL_ServerName.Name = "LBL_ServerName";
-            LBL_ServerName.Size = new Size(740, 23);
+            LBL_ServerName.Size = new Size(566, 23);
             LBL_ServerName.TabIndex = 0;
             LBL_ServerName.Text = "Server: {name}";
             // 
@@ -172,6 +211,8 @@
             IGL_TRV_Directory.Images.SetKeyName(1, "folder");
             IGL_TRV_Directory.Images.SetKeyName(2, "file");
             IGL_TRV_Directory.Images.SetKeyName(3, "javaFile");
+            IGL_TRV_Directory.Images.SetKeyName(4, "settingsFile");
+            IGL_TRV_Directory.Images.SetKeyName(5, "imageFile");
             // 
             // PNL_Left
             // 
@@ -347,6 +388,7 @@
             FormClosing += FRM_Console_FormClosing;
             PNL_Top.ResumeLayout(false);
             PNL_Top.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NUD_ServerRam).EndInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).EndInit();
             CMS_TRV_Directory.ResumeLayout(false);
             PNL_Left.ResumeLayout(false);
@@ -389,5 +431,8 @@
         private ToolStripMenuItem TMI_DeleteFile;
         private ToolStripMenuItem TMI_EditFile;
         private ToolStripSeparator TMI_SEP1;
+        private Label LBL_ServerRam;
+        private NumericUpDown NUD_ServerRam;
+        private Label LBL_ServerRamUnit;
     }
 }

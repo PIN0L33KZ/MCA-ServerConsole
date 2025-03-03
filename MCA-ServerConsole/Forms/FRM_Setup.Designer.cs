@@ -180,7 +180,10 @@
             Controls.Add(LBL_ServerIP);
             Controls.Add(TBX_ServerName);
             Controls.Add(LBL_ServerName);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "FRM_Setup";
             Text = "Minecraft Advanced Server Console :: Setup";
             Load += FRM_Setup_Load;

@@ -198,7 +198,11 @@ namespace MCA_ServerConsole
                 Settings.Default.ServerName = TBX_ServerName.Text.Trim();
                 Settings.Default.ServerAddress = TBX_ServerAddress.Text.Trim();
                 Settings.Default.ServerDirectory = TBX_ServerDirectory.Text.Trim();
-                Settings.Default.ServerImage = ImageHelper.ConvertImageToString(PBX_ServerImage.Image);
+                Settings.Default.ServerImage = ImageHelper.ConvertImageToString(new Bitmap(PBX_ServerImage.Image, new Size(64, 64)));
+
+                // Save server Image
+                var bmp = new Bitmap(PBX_ServerImage.Image, new Size(64, 64));
+                bmp.Save(Properties.Settings.Default.ServerDirectory + @"\server-icon.png");
 
                 Settings.Default.Save();
 
