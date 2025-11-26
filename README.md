@@ -3,9 +3,8 @@
 ### (W)ork (i)n (P)rogress! ⚠️
 
 ## Known issues:
-The API results for downloading *.jar files are currently unavailable (API is down, unsupported, or EOL?).
-> This issue is fixed! I now use the official mojang piston api.
-
+> [!TIP]  
+> The API results for downloading *.jar files are now available again! (I switched to the official mojang piston API!)
 
 ## Overview
 
