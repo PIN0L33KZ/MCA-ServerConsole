@@ -301,55 +301,14 @@ namespace MCA_ServerConsole.Properties
 
             try
             {
-                // Folder browser dialog configuration
-                // Determine base path for the folder dialog
-                string basePath;
-
-                if(!string.IsNullOrWhiteSpace(_initialServerPath) && Directory.Exists(_initialServerPath))
-                {
-                    basePath = _initialServerPath;
-                }
-                else if(!string.IsNullOrWhiteSpace(Settings.Default.ServerDirectory)
-                         && Directory.Exists(Settings.Default.ServerDirectory))
-                {
-                    basePath = Settings.Default.ServerDirectory;
-                }
-                else
-                {
-                    basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                }
-
-                FolderBrowserDialog fBD = new()
-                {
-                    Description = "Select where to store your jar file.",
-                    ShowHiddenFiles = false,
-                    ShowNewFolderButton = true,
-                    SelectedPath = basePath.EndsWith("\\") ? basePath : basePath + '\\'
-                };
-
-                // User cancels the dialog
-                if(fBD.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
-
-                // Validate the selected path
-                if(string.IsNullOrWhiteSpace(fBD.SelectedPath) || !Directory.Exists(fBD.SelectedPath))
-                {
-                    _ = MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 CBX_ServerType.Enabled = false;
                 CBX_ServerVersion.Enabled = false;
                 BTN_DownloadServerJarFile.Enabled = false;
 
                 // Download the official Mojang server jar
-                await DownloadJarFile(selectedType, selectedVersion, fBD.SelectedPath.ToString(), PGB_Download);
+                await DownloadJarFile(selectedType, selectedVersion, _initialServerPath, PGB_Download);
 
-                CBX_ServerType.Enabled = true;
-                CBX_ServerVersion.Enabled = true;
-                BTN_DownloadServerJarFile.Enabled = true;
+                this.Close();
             }
             catch(Exception ex)
             {
