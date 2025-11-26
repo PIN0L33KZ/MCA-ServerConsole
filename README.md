@@ -11,7 +11,8 @@ The API results for downloading *.jar files are currently unavailable (API is do
 
 Welcome to the **Minecraft Advanced Server Console** repository! This powerful application serves as a complete solution for managing your Minecraft server. Whether you're setting up a new server, monitoring its performance, or using the console for administrative tasks, this tool has got you covered.
 
-![grafik](https://github.com/user-attachments/assets/6f5a1a33-98f0-48c0-a0db-425e004e126e)
+![grafik](https://github.com/user-attachments/assets/344cb29f-3d46-46c7-be70-07a6f5f1c9bc)
+
 
 Build in Code Editor with Syntax Highlights for .properties .json and logfiles!
 
