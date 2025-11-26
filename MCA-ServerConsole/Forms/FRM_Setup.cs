@@ -223,9 +223,16 @@ namespace MCA_ServerConsole
 
         private void BTN_AddServerFile_Click(object sender, EventArgs e)
         {
-            FRM_DownloadServerJarFile downloadJarFileForm = new();
+            FRM_DownloadServerJarFile downloadJarFileForm = new(TBX_ServerDirectory.Text);
             _ = downloadJarFileForm.ShowDialog(this);
         }
 
+        private void TBX_ServerDirectory_TextChanged(object sender, EventArgs e)
+        {
+            bool isValidDir = !string.IsNullOrWhiteSpace(TBX_ServerDirectory.Text)
+                      && Directory.Exists(TBX_ServerDirectory.Text);
+
+            BTN_AddServerFile.Enabled = isValidDir;
+        }
     }
 }

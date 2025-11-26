@@ -105,6 +105,7 @@
             TBX_ServerDirectory.Size = new Size(197, 23);
             TBX_ServerDirectory.TabIndex = 2;
             TBX_ServerDirectory.WordWrap = false;
+            TBX_ServerDirectory.TextChanged += TBX_ServerDirectory_TextChanged;
             // 
             // BTN_SelectServerDirectory
             // 
@@ -156,6 +157,7 @@
             // 
             BTN_AddServerFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BTN_AddServerFile.Cursor = Cursors.Hand;
+            BTN_AddServerFile.Enabled = false;
             BTN_AddServerFile.Location = new Point(12, 175);
             BTN_AddServerFile.Name = "BTN_AddServerFile";
             BTN_AddServerFile.Size = new Size(431, 25);
