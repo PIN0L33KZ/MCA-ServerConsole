@@ -1,9 +1,10 @@
 ﻿using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
+using Windows.Foundation.Diagnostics;
 
 namespace MCA_ServerConsole.Classes
 {
-    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton, Button saveConsoleOutput, RichTextBox serverLog, ContextMenuStrip contextMenuStrip, CheckBox javaConsole)
+    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton, Button saveConsoleOutput, RichTextBox serverLog, ContextMenuStrip contextMenuStrip, CheckBox javaConsole, JavaProcessHandler processHandler)
     {
         private readonly ToolStripLabel _serverStatusLabel = serverStatusLabel;
         private readonly ToolStripLabel _gameVersionLabel = gameVersionLabel;
@@ -20,6 +21,7 @@ namespace MCA_ServerConsole.Classes
         private readonly RichTextBox _serverLog = serverLog;
         private readonly ContextMenuStrip _menuStrip = contextMenuStrip;
         private readonly CheckBox _javaConsole = javaConsole;
+        private readonly JavaProcessHandler _javaProcessHandler = processHandler;
 
         public void UpdateUI(string keyword, string output)
         {
@@ -27,8 +29,8 @@ namespace MCA_ServerConsole.Classes
             {
                 // User needs to accept the EULA
                 case "agree to the eula":
-                    _serverStatusLabel.Text = "Server stopped";
-                    _serverStatusLabel.Image = Properties.Resources.stopped;
+                    _serverStatusLabel.Text = "Server is waiting for user action";
+                    _serverStatusLabel.Image = Properties.Resources.waiting;
                     _startServerButton.Enabled = true;
                     _javaConsole.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = true;
@@ -50,16 +52,21 @@ namespace MCA_ServerConsole.Classes
                     _startServerButton.PerformClick();
                     break;
 
-                case "used by another process":
-                    if(MessageBox.Show("There's already a server process running in the background, cancel running task?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                case "sun.nio.ch.filedispatcherimpl.write0":
+                    _serverStatusLabel.Text = "Server crashed";
+                    _serverStatusLabel.Image = Properties.Resources.health;
+
+                    if(MessageBox.Show("There is already a server process running in the background, shutdown now?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     {
                         _startServerButton.Enabled = true;
                         _javaConsole.Enabled = true;
+                        _serverRam.Enabled = true;
+                        _jarFileSelectionComboBox.Enabled = true;
                         return;
                     }
+
                     JavaProcessHandler.KillAlreadyRunningJavaProcesses();
                     _startServerButton.Enabled = true;
-                    _javaConsole.Enabled = true;
                     _startServerButton.PerformClick();
                     break;
 

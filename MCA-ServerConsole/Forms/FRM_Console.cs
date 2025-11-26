@@ -23,7 +23,7 @@ namespace MCA_ServerConsole.Forms
             InitializeComponent();
 
             // Initialize Handler
-            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole);
+            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole, _javaProcessHandler);
             _javaProcessHandler = new JavaProcessHandler(HandleKeyword);
             _fileSystemManager = new FileSystemManager(UpdateDirectoryStructure);
 
@@ -182,9 +182,10 @@ namespace MCA_ServerConsole.Forms
                     return;
                 }
 
-                RTB_ServerLog.Clear();
-
                 string javaGui = CHX_ShowJavaConsole.Checked ? "" : "nogui";
+
+                _javaProcessHandler.KillJavaProcess();
+                RTB_ServerLog.Clear();
 
                 await _javaProcessHandler.StartJavaProcessAsync(
                     $"-Xmx{NUD_ServerRam.Value}G -jar {CBX_JarFile.SelectedItem} {javaGui}",
@@ -248,7 +249,7 @@ namespace MCA_ServerConsole.Forms
                     _uiHandler.UpdateUI(keyword, output);
                     break;
 
-                case "used by another process":
+                case "sun.nio.ch.filedispatcherimpl.write0": // (indicates that a server instance is already running)
                     _uiHandler.UpdateUI(keyword, output);
                     break;
 

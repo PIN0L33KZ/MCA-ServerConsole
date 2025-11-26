@@ -36,7 +36,7 @@ namespace MCA_ServerConsole.Classes
                     if(!string.IsNullOrEmpty(e.Data))
                     {
                         outputHandler?.Invoke(e.Data);
-                        CheckKeywords(e.Data);
+                        CheckKeywords(e.Data.ToLower());
                     }
                 };
 
@@ -62,7 +62,7 @@ namespace MCA_ServerConsole.Classes
 
         private void CheckKeywords(string output)
         {
-            string[] keywords = { "agree to the eula", "used by another process", "starting", "server version", "server on", "done", "game type", "stopping server" };
+            string[] keywords = { "agree to the eula", "sun.nio.ch.filedispatcherimpl.write0", "starting", "server version", "server on", "done", "game type", "stopping server" };
             foreach(string keyword in keywords)
             {
                 if(output.Contains(keyword, StringComparison.OrdinalIgnoreCase))
@@ -143,6 +143,25 @@ namespace MCA_ServerConsole.Classes
                 _javaProcess.Kill();
                 _javaProcess.WaitForExit();
             }
+        }
+
+        public void SilenceJavaProcess()
+        {
+            try
+            {
+                if(_javaProcess == null || _javaProcess.HasExited)
+                {
+                    throw new InvalidOperationException("Java process is not running or has already exited.");
+                }
+
+                _javaProcess.ErrorDataReceived += (sender, e) => { /* Ignoriere Fehlerausgabe */ };
+                _javaProcess.BeginErrorReadLine();
+
+                _javaProcess.OutputDataReceived += (sender, e) => { /* Ignoriere Fehlerausgabe */ };
+                _javaProcess.BeginOutputReadLine();
+            }
+            catch(Exception)
+            {}
         }
     }
 }
