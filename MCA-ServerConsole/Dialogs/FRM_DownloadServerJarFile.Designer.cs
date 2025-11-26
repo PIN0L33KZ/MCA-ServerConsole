@@ -58,6 +58,7 @@
             CBX_ServerVersion.Name = "CBX_ServerVersion";
             CBX_ServerVersion.Size = new Size(95, 23);
             CBX_ServerVersion.TabIndex = 2;
+            CBX_ServerVersion.SelectedIndexChanged += CBX_ServerVersion_SelectedIndexChanged;
             // 
             // LBL_ServerType
             // 
@@ -83,9 +84,9 @@
             // 
             // BTN_DownloadServerJarFile
             // 
-            BTN_DownloadServerJarFile.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BTN_DownloadServerJarFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BTN_DownloadServerJarFile.Cursor = Cursors.Hand;
-            BTN_DownloadServerJarFile.Location = new Point(21, 119);
+            BTN_DownloadServerJarFile.Location = new Point(21, 78);
             BTN_DownloadServerJarFile.Name = "BTN_DownloadServerJarFile";
             BTN_DownloadServerJarFile.Size = new Size(181, 23);
             BTN_DownloadServerJarFile.TabIndex = 3;
@@ -95,10 +96,10 @@
             // 
             // PGB_Download
             // 
-            PGB_Download.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            PGB_Download.Anchor = AnchorStyles.Top;
             PGB_Download.Location = new Point(21, 79);
             PGB_Download.Name = "PGB_Download";
-            PGB_Download.Size = new Size(181, 23);
+            PGB_Download.Size = new Size(181, 11);
             PGB_Download.TabIndex = 4;
             PGB_Download.UseWaitCursor = true;
             PGB_Download.Visible = false;
@@ -107,7 +108,7 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(222, 154);
+            ClientSize = new Size(222, 113);
             Controls.Add(PGB_Download);
             Controls.Add(BTN_DownloadServerJarFile);
             Controls.Add(CBX_ServerType);

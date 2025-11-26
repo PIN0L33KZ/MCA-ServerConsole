@@ -87,6 +87,7 @@
             TBX_ServerAddress.PlaceholderText = "127.0.0.1";
             TBX_ServerAddress.Size = new Size(114, 23);
             TBX_ServerAddress.TabIndex = 1;
+            TBX_ServerAddress.Text = "127.0.0.1";
             TBX_ServerAddress.WordWrap = false;
             // 
             // LBL_ServerDirectory
@@ -145,7 +146,7 @@
             // 
             BTN_SaveSetup.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BTN_SaveSetup.Cursor = Cursors.Hand;
-            BTN_SaveSetup.Location = new Point(12, 206);
+            BTN_SaveSetup.Location = new Point(12, 166);
             BTN_SaveSetup.Name = "BTN_SaveSetup";
             BTN_SaveSetup.Size = new Size(431, 25);
             BTN_SaveSetup.TabIndex = 5;
@@ -158,7 +159,7 @@
             BTN_AddServerFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BTN_AddServerFile.Cursor = Cursors.Hand;
             BTN_AddServerFile.Enabled = false;
-            BTN_AddServerFile.Location = new Point(12, 175);
+            BTN_AddServerFile.Location = new Point(12, 135);
             BTN_AddServerFile.Name = "BTN_AddServerFile";
             BTN_AddServerFile.Size = new Size(431, 25);
             BTN_AddServerFile.TabIndex = 5;
@@ -170,7 +171,7 @@
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(455, 243);
+            ClientSize = new Size(455, 203);
             Controls.Add(PBX_ServerImage);
             Controls.Add(BTN_AddServerFile);
             Controls.Add(BTN_SaveSetup);

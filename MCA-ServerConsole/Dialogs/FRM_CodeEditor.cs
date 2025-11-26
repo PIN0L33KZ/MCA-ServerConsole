@@ -1,5 +1,5 @@
-﻿using System.Text.RegularExpressions;
-using FastColoredTextBoxNS;
+﻿using FastColoredTextBoxNS;
+using System.Text.RegularExpressions;
 
 namespace MCA_ServerConsole.Dialogs
 {
@@ -194,7 +194,7 @@ namespace MCA_ServerConsole.Dialogs
             }
             catch(IOException ex) when((ex.HResult & 0xFFFF) == 32)
             {
-                _ = MessageBox.Show($"This file is currently being used by your Server. Stop the server to edit this file.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"This file is currently being used by your Server. Stop the server to edit this file.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
                 return string.Empty;
             }

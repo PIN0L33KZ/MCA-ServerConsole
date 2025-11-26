@@ -31,7 +31,7 @@ namespace MCA_ServerConsole
             {
                 // General error handling for unexpected issues
                 _ = MessageBox.Show(this, "An error occurred while loading settings: " + ex.Message,
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             try
@@ -46,7 +46,7 @@ namespace MCA_ServerConsole
                     else
                     {
                         _ = MessageBox.Show(this, "The saved server directory does not exist. Please configure a new directory.",
-                            "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
 
@@ -64,7 +64,7 @@ namespace MCA_ServerConsole
                     catch(Exception ex)
                     {
                         _ = MessageBox.Show(this, "An error occurred while loading the server image: " + ex.Message,
-                            "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace MCA_ServerConsole
             {
                 // General catch for unexpected errors during form load
                 _ = MessageBox.Show(this, "An unexpected error occurred while loading the setup: " + ex.Message,
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -100,7 +100,7 @@ namespace MCA_ServerConsole
                 // Validate the selected path
                 if(string.IsNullOrWhiteSpace(fBD.SelectedPath) || !Directory.Exists(fBD.SelectedPath))
                 {
-                    _ = MessageBox.Show(this, "Invalid directory selected. Please try again.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show(this, "Invalid directory selected. Please try again.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -112,7 +112,7 @@ namespace MCA_ServerConsole
             catch(Exception ex)
             {
                 // Catch unexpected errors and display them
-                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -141,7 +141,7 @@ namespace MCA_ServerConsole
                 // User selected an invalid file
                 if(string.IsNullOrWhiteSpace(oFD.FileName))
                 {
-                    _ = MessageBox.Show("No file selected", "Minecraft Advanced Server Console");
+                    _ = MessageBox.Show("No file selected", "MCA Console");
                     return;
                 }
 
@@ -151,7 +151,7 @@ namespace MCA_ServerConsole
             catch(Exception ex)
             {
                 // Catch any error and display
-                _ = MessageBox.Show("Error: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Error: " + ex.Message, "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -190,7 +190,7 @@ namespace MCA_ServerConsole
                 if(errorCount > 0)
                 {
                     _ = MessageBox.Show(this, "Please correct the highlighted errors before saving.",
-                        "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -211,13 +211,13 @@ namespace MCA_ServerConsole
 
                 // Confirmation message
                 _ = MessageBox.Show(this, "Setup saved successfully!",
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch(Exception ex)
             {
                 // General error handling
                 _ = MessageBox.Show(this, "An unexpected error occurred while saving the setup: " + ex.Message,
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

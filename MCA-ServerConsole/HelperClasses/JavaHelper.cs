@@ -45,7 +45,7 @@ namespace MCA_ServerConsole.HelperClasses
                 if(!Directory.Exists(directoryPath))
                 {
                     _ = MessageBox.Show($"The directory '{directoryPath}' does not exist.",
-                        "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
 
@@ -58,7 +58,7 @@ namespace MCA_ServerConsole.HelperClasses
             catch(Exception ex)
             {
                 _ = MessageBox.Show($"An error occurred while checking for .jar files: {ex.Message}",
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -70,7 +70,7 @@ namespace MCA_ServerConsole.HelperClasses
                 if(!Directory.Exists(directoryPath))
                 {
                     _ = MessageBox.Show($"The directory '{directoryPath}' does not exist.",
-                        "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return [];
                 }
 
@@ -88,9 +88,24 @@ namespace MCA_ServerConsole.HelperClasses
             catch(Exception ex)
             {
                 _ = MessageBox.Show($"An error occurred while checking for .jar files: {ex.Message}",
-                    "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return [];
             }
+        }
+
+        public static string FormatBytes(long bytes)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB" };
+            double len = bytes;
+            int order = 0;
+
+            while(len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len /= 1024;
+            }
+
+            return $"{len:0.##} {sizes[order]}";
         }
     }
 }

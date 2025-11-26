@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 
 /// <summary>
 /// Represents the top-level Piston version manifest:
@@ -26,6 +24,7 @@ public class LatestVersionInfo
 
 /// <summary>
 /// Single Minecraft version entry in the manifest.
+/// This contains NO filesize information.
 /// </summary>
 public class MinecraftVersionInfo
 {
