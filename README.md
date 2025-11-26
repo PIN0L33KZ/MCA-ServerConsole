@@ -4,8 +4,7 @@
 
 ## Known issues:
 The API results for downloading *.jar files are currently unavailable (API is down, unsupported, or EOL?).
-
-_A transition to Mojang's official Piston API is planned!_
+> This issue is fixed! I now use the official mojang piston api.
 
 
 ## Overview
