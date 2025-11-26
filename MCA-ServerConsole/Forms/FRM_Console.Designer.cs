@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_Console));
             PNL_Top = new Panel();
+            BTN_AddJavaFile = new Button();
             CHX_ShowJavaConsole = new CheckBox();
             NUD_ServerRam = new NumericUpDown();
             LBL_ServerRamUnit = new Label();
@@ -65,6 +66,7 @@
             BTN_StartServer = new Button();
             CMS_RTB_ServerLog = new ContextMenuStrip(components);
             TMI_SaveOutput = new ToolStripMenuItem();
+            TIP_Main = new ToolTip(components);
             PNL_Top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_ServerRam).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
@@ -81,6 +83,7 @@
             // PNL_Top
             // 
             PNL_Top.BorderStyle = BorderStyle.Fixed3D;
+            PNL_Top.Controls.Add(BTN_AddJavaFile);
             PNL_Top.Controls.Add(CHX_ShowJavaConsole);
             PNL_Top.Controls.Add(NUD_ServerRam);
             PNL_Top.Controls.Add(LBL_ServerRamUnit);
@@ -95,34 +98,49 @@
             PNL_Top.Size = new Size(1010, 45);
             PNL_Top.TabIndex = 0;
             // 
+            // BTN_AddJavaFile
+            // 
+            BTN_AddJavaFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BTN_AddJavaFile.Cursor = Cursors.Hand;
+            BTN_AddJavaFile.Location = new Point(972, 9);
+            BTN_AddJavaFile.Name = "BTN_AddJavaFile";
+            BTN_AddJavaFile.Size = new Size(31, 23);
+            BTN_AddJavaFile.TabIndex = 3;
+            BTN_AddJavaFile.Text = "[+]";
+            TIP_Main.SetToolTip(BTN_AddJavaFile, "Add another Java File.");
+            BTN_AddJavaFile.UseVisualStyleBackColor = true;
+            BTN_AddJavaFile.Click += BTN_AddJavaFile_Click;
+            // 
             // CHX_ShowJavaConsole
             // 
             CHX_ShowJavaConsole.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CHX_ShowJavaConsole.AutoSize = true;
-            CHX_ShowJavaConsole.Location = new Point(507, 11);
+            CHX_ShowJavaConsole.Location = new Point(479, 11);
             CHX_ShowJavaConsole.Name = "CHX_ShowJavaConsole";
             CHX_ShowJavaConsole.Size = new Size(123, 19);
             CHX_ShowJavaConsole.TabIndex = 4;
             CHX_ShowJavaConsole.Text = "Show java console";
+            TIP_Main.SetToolTip(CHX_ShowJavaConsole, "Opens the default server console aswell.");
             CHX_ShowJavaConsole.UseVisualStyleBackColor = true;
             // 
             // NUD_ServerRam
             // 
             NUD_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             NUD_ServerRam.Increment = new decimal(new int[] { 5, 0, 0, 0 });
-            NUD_ServerRam.Location = new Point(729, 9);
+            NUD_ServerRam.Location = new Point(701, 9);
             NUD_ServerRam.Maximum = new decimal(new int[] { 99, 0, 0, 0 });
             NUD_ServerRam.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NUD_ServerRam.Name = "NUD_ServerRam";
             NUD_ServerRam.Size = new Size(33, 23);
             NUD_ServerRam.TabIndex = 0;
+            TIP_Main.SetToolTip(NUD_ServerRam, "Select the amount of RAM (GB) which the server should use.");
             NUD_ServerRam.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // LBL_ServerRamUnit
             // 
             LBL_ServerRamUnit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_ServerRamUnit.AutoSize = true;
-            LBL_ServerRamUnit.Location = new Point(761, 12);
+            LBL_ServerRamUnit.Location = new Point(733, 12);
             LBL_ServerRamUnit.Name = "LBL_ServerRamUnit";
             LBL_ServerRamUnit.Size = new Size(22, 15);
             LBL_ServerRamUnit.TabIndex = 4;
@@ -132,7 +150,7 @@
             // 
             LBL_ServerRam.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_ServerRam.AutoSize = true;
-            LBL_ServerRam.Location = new Point(636, 12);
+            LBL_ServerRam.Location = new Point(608, 12);
             LBL_ServerRam.Name = "LBL_ServerRam";
             LBL_ServerRam.Size = new Size(87, 15);
             LBL_ServerRam.TabIndex = 4;
@@ -142,7 +160,7 @@
             // 
             LBL_JarFile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LBL_JarFile.AutoSize = true;
-            LBL_JarFile.Location = new Point(793, 12);
+            LBL_JarFile.Location = new Point(765, 12);
             LBL_JarFile.Name = "LBL_JarFile";
             LBL_JarFile.Size = new Size(74, 15);
             LBL_JarFile.TabIndex = 4;
@@ -154,10 +172,11 @@
             CBX_JarFile.Cursor = Cursors.Hand;
             CBX_JarFile.DropDownStyle = ComboBoxStyle.DropDownList;
             CBX_JarFile.FormattingEnabled = true;
-            CBX_JarFile.Location = new Point(873, 9);
+            CBX_JarFile.Location = new Point(845, 9);
             CBX_JarFile.Name = "CBX_JarFile";
             CBX_JarFile.Size = new Size(121, 23);
             CBX_JarFile.TabIndex = 1;
+            TIP_Main.SetToolTip(CBX_JarFile, "Select the java file the server should use.");
             // 
             // PBX_ServerImage
             // 
@@ -168,6 +187,7 @@
             PBX_ServerImage.SizeMode = PictureBoxSizeMode.Zoom;
             PBX_ServerImage.TabIndex = 2;
             PBX_ServerImage.TabStop = false;
+            TIP_Main.SetToolTip(PBX_ServerImage, "Your server's icon. (Visible in Minecraft)");
             // 
             // LBL_ServerName
             // 
@@ -176,7 +196,7 @@
             LBL_ServerName.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             LBL_ServerName.Location = new Point(51, 9);
             LBL_ServerName.Name = "LBL_ServerName";
-            LBL_ServerName.Size = new Size(450, 23);
+            LBL_ServerName.Size = new Size(422, 23);
             LBL_ServerName.TabIndex = 0;
             LBL_ServerName.Text = "Server: $serverName";
             // 
@@ -298,6 +318,7 @@
             BTN_SendCommand.Size = new Size(83, 23);
             BTN_SendCommand.TabIndex = 1;
             BTN_SendCommand.Text = "Send";
+            TIP_Main.SetToolTip(BTN_SendCommand, "Send the command to your server.");
             BTN_SendCommand.UseVisualStyleBackColor = true;
             BTN_SendCommand.Click += BTN_SendCommand_Click;
             // 
@@ -313,6 +334,7 @@
             TBX_CommandText.PlaceholderText = "Send command";
             TBX_CommandText.Size = new Size(617, 23);
             TBX_CommandText.TabIndex = 0;
+            TIP_Main.SetToolTip(TBX_CommandText, "This command will be sent to your server.");
             TBX_CommandText.KeyDown += TBX_CommandText_KeyDown;
             // 
             // TSP_StatusBar
@@ -377,6 +399,7 @@
             BTN_SaveOutput.Size = new Size(83, 23);
             BTN_SaveOutput.TabIndex = 3;
             BTN_SaveOutput.Text = "Save Output";
+            TIP_Main.SetToolTip(BTN_SaveOutput, "Save your console log to a file.");
             BTN_SaveOutput.UseVisualStyleBackColor = true;
             BTN_SaveOutput.Click += BTN_SaveOutput_Click;
             // 
@@ -390,6 +413,7 @@
             BTN_StopServer.Size = new Size(83, 23);
             BTN_StopServer.TabIndex = 2;
             BTN_StopServer.Text = "Stop Server";
+            TIP_Main.SetToolTip(BTN_StopServer, "Stop your server.");
             BTN_StopServer.UseVisualStyleBackColor = true;
             BTN_StopServer.Click += BTN_StopServer_Click;
             // 
@@ -403,6 +427,7 @@
             BTN_ReloadServer.Size = new Size(83, 23);
             BTN_ReloadServer.TabIndex = 1;
             BTN_ReloadServer.Text = "Reload Server";
+            TIP_Main.SetToolTip(BTN_ReloadServer, "Reload your server.");
             BTN_ReloadServer.UseVisualStyleBackColor = true;
             BTN_ReloadServer.Click += BTN_ReloadServer_Click;
             // 
@@ -415,6 +440,7 @@
             BTN_StartServer.Size = new Size(83, 23);
             BTN_StartServer.TabIndex = 0;
             BTN_StartServer.Text = "Start Server";
+            TIP_Main.SetToolTip(BTN_StartServer, "Start your server.");
             BTN_StartServer.UseVisualStyleBackColor = true;
             BTN_StartServer.Click += BTN_StartServer_Click;
             // 
@@ -501,5 +527,7 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem TMI_SaveOutput;
         private CheckBox CHX_ShowJavaConsole;
+        private Button BTN_AddJavaFile;
+        private ToolTip TIP_Main;
     }
 }

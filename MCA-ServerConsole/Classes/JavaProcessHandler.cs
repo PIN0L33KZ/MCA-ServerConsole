@@ -105,7 +105,7 @@ namespace MCA_ServerConsole.Classes
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error sending command: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error sending command: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -161,7 +161,7 @@ namespace MCA_ServerConsole.Classes
                 _javaProcess.BeginOutputReadLine();
             }
             catch(Exception)
-            {}
+            { }
         }
     }
 }

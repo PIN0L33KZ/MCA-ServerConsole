@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-/// <summary>
-/// Version detail JSON for a single Minecraft version.
-/// </summary>
 public class VersionDetail
 {
     [JsonProperty("downloads")]
@@ -11,15 +8,14 @@ public class VersionDetail
 
 public class VersionDownloads
 {
-    // We care mainly about this for dedicated server downloads.
     [JsonProperty("server")]
     public DownloadEntry? Server { get; set; }
 
-    [JsonProperty("server_mappings")]
-    public DownloadEntry? ServerMappings { get; set; }
-
     [JsonProperty("client")]
     public DownloadEntry? Client { get; set; }
+
+    [JsonProperty("server_mappings")]
+    public DownloadEntry? ServerMappings { get; set; }
 
     [JsonProperty("client_mappings")]
     public DownloadEntry? ClientMappings { get; set; }

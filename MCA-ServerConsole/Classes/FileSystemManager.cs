@@ -55,7 +55,7 @@
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error loading folder structure: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error loading folder structure: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -115,7 +115,7 @@
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error loading subdirectories or files: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error loading subdirectories or files: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -150,7 +150,7 @@
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error updating folder structure: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error updating folder structure: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -232,7 +232,7 @@
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error updating subdirectories or files: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error updating subdirectories or files: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

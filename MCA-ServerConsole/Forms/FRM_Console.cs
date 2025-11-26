@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
+﻿using MCA_ServerConsole.Classes;
+using MCA_ServerConsole.Dialogs;
+using MCA_ServerConsole.HelperClasses;
+using MCA_ServerConsole.Properties;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
-using MCA_ServerConsole.Classes;
-using MCA_ServerConsole.Dialogs;
-using MCA_ServerConsole.HelperClasses;
 
 namespace MCA_ServerConsole.Forms
 {
@@ -23,7 +24,7 @@ namespace MCA_ServerConsole.Forms
             InitializeComponent();
 
             // Initialize Handler
-            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole, _javaProcessHandler);
+            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, BTN_AddJavaFile, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole, _javaProcessHandler);
             _javaProcessHandler = new JavaProcessHandler(HandleKeyword);
             _fileSystemManager = new FileSystemManager(UpdateDirectoryStructure);
 
@@ -53,7 +54,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Initialization error: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Initialization error: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -71,7 +72,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error loading directory structure: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error loading directory structure: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -90,7 +91,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error loading directory structure: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error loading directory structure: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -130,7 +131,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error updating .jar files: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error updating .jar files: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -151,12 +152,12 @@ namespace MCA_ServerConsole.Forms
                 }
                 else
                 {
-                    _ = MessageBox.Show("No .jar files found in the server directory.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("No .jar files found in the server directory.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error loading .jar files: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error loading .jar files: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -168,7 +169,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error initializing file watcher: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error initializing file watcher: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -178,7 +179,7 @@ namespace MCA_ServerConsole.Forms
             {
                 if(CBX_JarFile.SelectedItem == null)
                 {
-                    _ = MessageBox.Show("Please select a .jar file to start the server.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("Please select a .jar file to start the server.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -195,7 +196,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error starting server: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error starting server: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -207,7 +208,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error stopping server: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error stopping server: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -219,7 +220,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error reloading server: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error reloading server: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -300,7 +301,7 @@ namespace MCA_ServerConsole.Forms
 
                 if(string.IsNullOrEmpty(path))
                 {
-                    _ = MessageBox.Show("Invalid path.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("Invalid path.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -313,13 +314,13 @@ namespace MCA_ServerConsole.Forms
                     }
                     else
                     {
-                        _ = MessageBox.Show("Unable to locate the parent directory.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        _ = MessageBox.Show("Unable to locate the parent directory.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error opening file: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error opening file: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -329,7 +330,7 @@ namespace MCA_ServerConsole.Forms
             {
                 if(_javaProcessHandler != null && !_javaProcessHandler.IsProcessExited)
                 {
-                    _ = MessageBox.Show("The server is still running! Please stop the server before exiting.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("The server is still running! Please stop the server before exiting.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     e.Cancel = true;
                 }
                 else
@@ -339,7 +340,7 @@ namespace MCA_ServerConsole.Forms
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error during form closing: {ex.Message}", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Error during form closing: {ex.Message}", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
         }
@@ -407,7 +408,7 @@ namespace MCA_ServerConsole.Forms
                     }
                     else if(!(path.EndsWith(".json") || path.EndsWith(".png") || path.EndsWith(".properties") || path.EndsWith(".log") || path.EndsWith(".txt")))
                     {
-                        _ = MessageBox.Show("This file can't be opened within this application.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show("This file can't be opened within this application.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         return;
                     }
@@ -422,7 +423,7 @@ namespace MCA_ServerConsole.Forms
                 }
                 else
                 {
-                    _ = MessageBox.Show("The selected file does not exist.", "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show("The selected file does not exist.", "MCA Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch(Exception) { }
@@ -441,7 +442,7 @@ namespace MCA_ServerConsole.Forms
                 }
 
                 string? path = selectedNode.Tag.ToString();
-                if(MessageBox.Show($"Delete {StringHelper.CutTillLastPart(path, "\\")}?", "Minecraft Advanced Server Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                if(MessageBox.Show($"Delete {StringHelper.CutTillLastPart(path, "\\")}?", "MCA Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 {
                     return;
                 }
@@ -483,6 +484,7 @@ namespace MCA_ServerConsole.Forms
                 WriteFileContent(sFD.FileName, RTB_ServerLog.Text);
             }
         }
+
         private static void WriteFileContent(string filePath, string content)
         {
             try
@@ -504,6 +506,12 @@ namespace MCA_ServerConsole.Forms
         private void TMI_SaveOutput_Click(object sender, EventArgs e)
         {
             BTN_SaveOutput.PerformClick();
+        }
+
+        private void BTN_AddJavaFile_Click(object sender, EventArgs e)
+        {
+            FRM_DownloadServerJarFile downloadJarFileForm = new(Properties.Settings.Default.ServerDirectory);
+            _ = downloadJarFileForm.ShowDialog(this);
         }
     }
 }
