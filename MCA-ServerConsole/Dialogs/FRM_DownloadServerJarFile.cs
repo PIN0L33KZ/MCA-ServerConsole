@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace MCA_ServerConsole.Properties
 {
@@ -8,9 +9,16 @@ namespace MCA_ServerConsole.Properties
         private readonly List<string> CachedServerTypes = [];
         private readonly Dictionary<string, List<string>> CachedServerVersions = [];
 
-        public FRM_DownloadServerJarFile()
+        // Cached Piston manifest + quick lookup by version id
+        private VersionManifest? _versionManifest;
+        private readonly Dictionary<string, MinecraftVersionInfo> _versionById =
+            new(StringComparer.OrdinalIgnoreCase);
+        private readonly string? _initialServerPath;
+
+        public FRM_DownloadServerJarFile(string storagePath)
         {
             InitializeComponent();
+            _initialServerPath = storagePath;
         }
 
         private async void FRM_DownloadServerJarFile_Load(object sender, EventArgs e)
@@ -28,7 +36,7 @@ namespace MCA_ServerConsole.Properties
                     _ = CBX_ServerType.Items.Add("");
                     CBX_ServerType.SelectedIndex = 0;
 
-                    // Fetch server types
+                    // Fetch server types (Piston version "types": release, snapshot, etc.)
                     await FetchAndPopulateServerTypes(CBX_ServerType);
 
                     // Fetch matching versions
@@ -47,25 +55,21 @@ namespace MCA_ServerConsole.Properties
             }
             catch(PingException ex)
             {
-                // Handle ping-specific exceptions
                 _ = MessageBox.Show(this, "Ping failed: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(HttpRequestException ex)
             {
-                // Handle HTTP request exceptions
                 _ = MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(TaskCanceledException)
             {
-                // Handle request timeouts
                 _ = MessageBox.Show(this, "The request timed out. Please try again.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch(Exception ex)
             {
-                // Handle other exceptions
                 _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -93,27 +97,51 @@ namespace MCA_ServerConsole.Properties
             }
             catch(PingException ex)
             {
-                // Handle ping-specific exceptions
                 _ = MessageBox.Show(this, "Ping failed: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(HttpRequestException ex)
             {
-                // Handle HTTP request exceptions
                 _ = MessageBox.Show(this, "Failed to fetch server versions: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(TaskCanceledException)
             {
-                // Handle request timeouts
                 _ = MessageBox.Show(this, "The request timed out. Please try again.",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch(Exception ex)
             {
-                // Handle other exceptions
                 _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Ensure the Piston version manifest is downloaded and cached.
+        /// </summary>
+        private async Task EnsureVersionManifestLoaded()
+        {
+            if(_versionManifest != null)
+            {
+                return;
+            }
+
+            string manifestUrl = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
+
+            using HttpClient httpClient = new();
+            string json = await httpClient.GetStringAsync(manifestUrl);
+
+            VersionManifest? manifest = JsonConvert.DeserializeObject<VersionManifest>(json);
+            _versionManifest = manifest ?? throw new Exception("Version manifest response was empty.");
+
+            _versionById.Clear();
+            foreach(MinecraftVersionInfo version in _versionManifest.Versions)
+            {
+                if(!_versionById.ContainsKey(version.Id))
+                {
+                    _versionById[version.Id] = version;
+                }
             }
         }
 
@@ -144,22 +172,24 @@ namespace MCA_ServerConsole.Properties
                 }
             }
 
-            string apiUrl = "https://api.serverjars.in/v1/serverjars/fetchTypes";
-
             try
             {
-                using HttpClient httpClient = new();
-                // Send API request
-                string response = await httpClient.GetStringAsync(apiUrl);
+                // Load Piston version manifest
+                await EnsureVersionManifestLoaded();
 
-                // Deserialize JSON response
-                ServerTypesResponse? serverTypesResponse = JsonConvert.DeserializeObject<ServerTypesResponse>(response) ?? throw new Exception("API response was empty.");
+                if(_versionManifest == null)
+                {
+                    throw new Exception("Version manifest is not available.");
+                }
 
-                // Add types to cache
-                CachedServerTypes.AddRange(serverTypesResponse.Response.Modded);
-                CachedServerTypes.AddRange(serverTypesResponse.Response.Proxies);
-                CachedServerTypes.AddRange(serverTypesResponse.Response.Vanilla);
-                CachedServerTypes.AddRange(serverTypesResponse.Response.Servers);
+                // Derive distinct version types (release, snapshot, old_beta, old_alpha)
+                List<string> types = _versionManifest.Versions
+                    .Select(v => v.Type)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(t => t)
+                    .ToList();
+
+                CachedServerTypes.AddRange(types);
 
                 // Populate comboBox
                 comboBox.Items.Clear();
@@ -173,7 +203,7 @@ namespace MCA_ServerConsole.Properties
             }
             catch(HttpRequestException ex)
             {
-                _ = MessageBox.Show(this, "Failed to fetch server types: " + ex.Message,
+                _ = MessageBox.Show(this, "Failed to fetch server types from Piston API: " + ex.Message,
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch(Exception ex)
@@ -185,7 +215,7 @@ namespace MCA_ServerConsole.Properties
 
         private async Task FetchAndPopulateVersions(string category, ComboBox comboBox)
         {
-            // Check cached versions for the category
+            // Check cached versions for the category (type)
             if(CachedServerVersions.TryGetValue(category, out List<string>? value))
             {
                 comboBox.Items.Clear();
@@ -210,31 +240,23 @@ namespace MCA_ServerConsole.Properties
                 }
             }
 
-            string apiUrl = $"https://api.serverjars.in/v1/serverjars/fetchAll/{category}";
-
             try
             {
-                using HttpClient httpClient = new();
-                // Send API request
-                string response = await httpClient.GetStringAsync(apiUrl);
+                // Ensure manifest loaded
+                await EnsureVersionManifestLoaded();
 
-                // Deserialize JSON response
-                ServerJarVersionResponse? serverJarResponse = JsonConvert.DeserializeObject<ServerJarVersionResponse>(response);
-
-                if(serverJarResponse == null)
+                if(_versionManifest == null)
                 {
-                    throw new Exception("API response was empty.");
+                    throw new Exception("Version manifest is not available.");
                 }
 
-                // Add versions to cache
-                List<string> versions = [];
-                foreach(ServerJar jar in serverJarResponse.Response)
-                {
-                    if(jar != null && jar.Version != null) // Null check for jar and jar.Version
-                    {
-                        versions.Add(jar.Version);
-                    }
-                }
+                // Filter versions by type (category)
+                List<string> versions = _versionManifest.Versions
+                    .Where(v => string.Equals(v.Type, category, StringComparison.OrdinalIgnoreCase))
+                    .OrderByDescending(v => v.ReleaseTime)
+                    .Select(v => v.Id)
+                    .ToList();
+
                 CachedServerVersions[category] = versions;
 
                 // Populate comboBox
@@ -249,7 +271,7 @@ namespace MCA_ServerConsole.Properties
             }
             catch(Exception ex)
             {
-                _ = MessageBox.Show($"Error fetching server versions: {ex.Message}",
+                _ = MessageBox.Show($"Error fetching server versions from Piston API: {ex.Message}",
                     "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -266,7 +288,6 @@ namespace MCA_ServerConsole.Properties
                 return;
             }
 
-            // Download Jar file
             // Get selected type and version
             string? selectedType = CBX_ServerType.SelectedItem?.ToString();
             string? selectedVersion = CBX_ServerVersion.SelectedItem?.ToString();
@@ -278,18 +299,32 @@ namespace MCA_ServerConsole.Properties
                 return;
             }
 
-            // Specify the save directory
             try
             {
                 // Folder browser dialog configuration
+                // Determine base path for the folder dialog
+                string basePath;
+
+                if(!string.IsNullOrWhiteSpace(_initialServerPath) && Directory.Exists(_initialServerPath))
+                {
+                    basePath = _initialServerPath;
+                }
+                else if(!string.IsNullOrWhiteSpace(Settings.Default.ServerDirectory)
+                         && Directory.Exists(Settings.Default.ServerDirectory))
+                {
+                    basePath = Settings.Default.ServerDirectory;
+                }
+                else
+                {
+                    basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                }
+
                 FolderBrowserDialog fBD = new()
                 {
                     Description = "Select where to store your jar file.",
                     ShowHiddenFiles = false,
                     ShowNewFolderButton = true,
-                    SelectedPath = Settings.Default.ServerDirectory.Length > 0
-                        ? Settings.Default.ServerDirectory + '\\'
-                        : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + '\\'
+                    SelectedPath = basePath.EndsWith("\\") ? basePath : basePath + '\\'
                 };
 
                 // User cancels the dialog
@@ -309,7 +344,7 @@ namespace MCA_ServerConsole.Properties
                 CBX_ServerVersion.Enabled = false;
                 BTN_DownloadServerJarFile.Enabled = false;
 
-                // Call the download method
+                // Download the official Mojang server jar
                 await DownloadJarFile(selectedType, selectedVersion, fBD.SelectedPath.ToString(), PGB_Download);
 
                 CBX_ServerType.Enabled = true;
@@ -318,37 +353,56 @@ namespace MCA_ServerConsole.Properties
             }
             catch(Exception ex)
             {
-                // Catch unexpected errors and display them
                 _ = MessageBox.Show(this, "An unexpected error occurred: " + ex.Message, "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private async Task DownloadJarFile(string type, string version, string saveDirectory, ProgressBar progressBar)
         {
+            // type is now the Piston "version type" (release/snapshot/etc.) but not needed for the actual download.
             progressBar.Invoke(new Action(progressBar.Show));
-
-            string apiUrl = $"https://api.serverjars.in/v1/serverjars/fetchJar/{type}/{version}";
 
             try
             {
-                using HttpClient httpClient = new();
-                httpClient.Timeout = TimeSpan.FromSeconds(20);
+                // Ensure manifest loaded
+                await EnsureVersionManifestLoaded();
 
-                // Fetch the jar download URL from the API
-                string response = await httpClient.GetStringAsync(apiUrl);
-                JarFileResponse? jarResponse = JsonConvert.DeserializeObject<JarFileResponse>(response);
-
-                // Check if the URL is valid
-                if(jarResponse?.Response?.Url == null)
+                if(_versionManifest == null)
                 {
-                    _ = MessageBox.Show(this, "Invalid response from the server. Unable to fetch download URL.",
+                    throw new Exception("Version manifest is not available.");
+                }
+
+                if(!_versionById.TryGetValue(version, out MinecraftVersionInfo? versionInfo))
+                {
+                    // Fallback in case dictionary is out of sync
+                    versionInfo = _versionManifest.Versions
+                        .FirstOrDefault(v => v.Id.Equals(version, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if(versionInfo == null)
+                {
+                    _ = MessageBox.Show(this, $"The selected version '{version}' could not be found in the Piston manifest.",
                         "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                string downloadUrl = jarResponse.Response.Url;
+                using HttpClient httpClient = new();
+                httpClient.Timeout = TimeSpan.FromSeconds(20);
 
-                // Create save directory if it doesn't exist
+                // Fetch the version detail JSON from its URL
+                string versionJson = await httpClient.GetStringAsync(versionInfo.Url);
+                VersionDetail? versionDetail = JsonConvert.DeserializeObject<VersionDetail>(versionJson);
+
+                string? downloadUrl = versionDetail?.Downloads?.Server?.Url;
+                if(string.IsNullOrWhiteSpace(downloadUrl))
+                {
+                    _ = MessageBox.Show(this,
+                        "This version does not provide a dedicated server download (downloads.server.url is missing).",
+                        "Minecraft Advanced Server Console", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Create save directory if it does not exist
                 if(!Directory.Exists(saveDirectory))
                 {
                     _ = Directory.CreateDirectory(saveDirectory);
