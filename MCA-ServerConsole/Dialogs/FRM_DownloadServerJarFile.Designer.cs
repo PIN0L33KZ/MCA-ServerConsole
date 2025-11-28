@@ -28,92 +28,155 @@
         /// </summary>
         private void InitializeComponent()
         {
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FRM_DownloadServerJarFile));
             LBL_ServerVersion = new Label();
-            CBX_ServerVersion = new ComboBox();
             LBL_ServerType = new Label();
-            CBX_ServerType = new ComboBox();
-            BTN_DownloadServerJarFile = new Button();
-            PGB_Download = new ProgressBar();
+            CBX_ServerType = new Guna.UI2.WinForms.Guna2ComboBox();
+            CBX_ServerVersion = new Guna.UI2.WinForms.Guna2ComboBox();
+            PGB_Download = new Guna.UI2.WinForms.Guna2ProgressBar();
+            BTN_DownloadServerJarFile = new Guna.UI2.WinForms.Guna2Button();
             SuspendLayout();
             // 
             // LBL_ServerVersion
             // 
             LBL_ServerVersion.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LBL_ServerVersion.AutoSize = true;
-            LBL_ServerVersion.Location = new Point(21, 54);
+            LBL_ServerVersion.BackColor = Color.Transparent;
+            LBL_ServerVersion.Font = new Font("Lexend", 11.25F);
+            LBL_ServerVersion.ForeColor = Color.FromArgb(235, 234, 234);
+            LBL_ServerVersion.Location = new Point(21, 61);
             LBL_ServerVersion.Name = "LBL_ServerVersion";
-            LBL_ServerVersion.Size = new Size(80, 15);
+            LBL_ServerVersion.Size = new Size(116, 24);
             LBL_ServerVersion.TabIndex = 1;
             LBL_ServerVersion.Text = "Server version";
-            // 
-            // CBX_ServerVersion
-            // 
-            CBX_ServerVersion.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            CBX_ServerVersion.Cursor = Cursors.Hand;
-            CBX_ServerVersion.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBX_ServerVersion.Enabled = false;
-            CBX_ServerVersion.FormattingEnabled = true;
-            CBX_ServerVersion.Location = new Point(107, 50);
-            CBX_ServerVersion.Name = "CBX_ServerVersion";
-            CBX_ServerVersion.Size = new Size(95, 23);
-            CBX_ServerVersion.TabIndex = 2;
-            CBX_ServerVersion.SelectedIndexChanged += CBX_ServerVersion_SelectedIndexChanged;
             // 
             // LBL_ServerType
             // 
             LBL_ServerType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             LBL_ServerType.AutoSize = true;
-            LBL_ServerType.Location = new Point(21, 25);
+            LBL_ServerType.BackColor = Color.Transparent;
+            LBL_ServerType.Font = new Font("Lexend", 11.25F);
+            LBL_ServerType.ForeColor = Color.FromArgb(235, 234, 234);
+            LBL_ServerType.Location = new Point(21, 19);
             LBL_ServerType.Name = "LBL_ServerType";
-            LBL_ServerType.Size = new Size(61, 15);
+            LBL_ServerType.Size = new Size(89, 24);
             LBL_ServerType.TabIndex = 1;
             LBL_ServerType.Text = "Server Typ";
             // 
             // CBX_ServerType
             // 
-            CBX_ServerType.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            CBX_ServerType.AutoRoundedCorners = true;
+            CBX_ServerType.BackColor = Color.Transparent;
+            CBX_ServerType.BorderColor = Color.FromArgb(80, 76, 76);
+            CBX_ServerType.BorderThickness = 2;
             CBX_ServerType.Cursor = Cursors.Hand;
+            CBX_ServerType.CustomizableEdges = customizableEdges1;
+            CBX_ServerType.DrawMode = DrawMode.OwnerDrawFixed;
             CBX_ServerType.DropDownStyle = ComboBoxStyle.DropDownList;
-            CBX_ServerType.FormattingEnabled = true;
-            CBX_ServerType.Location = new Point(107, 21);
+            CBX_ServerType.FillColor = Color.FromArgb(58, 55, 55);
+            CBX_ServerType.FocusedColor = Color.FromArgb(162, 123, 90);
+            CBX_ServerType.FocusedState.BorderColor = Color.FromArgb(162, 123, 90);
+            CBX_ServerType.Font = new Font("Lexend", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CBX_ServerType.ForeColor = Color.FromArgb(235, 234, 234);
+            CBX_ServerType.HoverState.BorderColor = Color.FromArgb(194, 165, 142);
+            CBX_ServerType.ItemHeight = 30;
+            CBX_ServerType.Location = new Point(172, 13);
+            CBX_ServerType.MaxDropDownItems = 10;
             CBX_ServerType.Name = "CBX_ServerType";
-            CBX_ServerType.Size = new Size(95, 23);
-            CBX_ServerType.TabIndex = 2;
+            CBX_ServerType.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            CBX_ServerType.Size = new Size(156, 36);
+            CBX_ServerType.TabIndex = 5;
+            CBX_ServerType.TextOffset = new Point(0, 1);
+            CBX_ServerType.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             CBX_ServerType.SelectedIndexChanged += CBX_ServerType_SelectedIndexChanged;
             // 
-            // BTN_DownloadServerJarFile
+            // CBX_ServerVersion
             // 
-            BTN_DownloadServerJarFile.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            BTN_DownloadServerJarFile.Cursor = Cursors.Hand;
-            BTN_DownloadServerJarFile.Location = new Point(21, 78);
-            BTN_DownloadServerJarFile.Name = "BTN_DownloadServerJarFile";
-            BTN_DownloadServerJarFile.Size = new Size(181, 23);
-            BTN_DownloadServerJarFile.TabIndex = 3;
-            BTN_DownloadServerJarFile.Text = "Download";
-            BTN_DownloadServerJarFile.UseVisualStyleBackColor = true;
-            BTN_DownloadServerJarFile.Click += BTN_DownloadServerJarFile_Click;
+            CBX_ServerVersion.AutoRoundedCorners = true;
+            CBX_ServerVersion.BackColor = Color.Transparent;
+            CBX_ServerVersion.BorderColor = Color.FromArgb(80, 76, 76);
+            CBX_ServerVersion.BorderThickness = 2;
+            CBX_ServerVersion.Cursor = Cursors.Hand;
+            CBX_ServerVersion.CustomizableEdges = customizableEdges3;
+            CBX_ServerVersion.DrawMode = DrawMode.OwnerDrawFixed;
+            CBX_ServerVersion.DropDownStyle = ComboBoxStyle.DropDownList;
+            CBX_ServerVersion.FillColor = Color.FromArgb(58, 55, 55);
+            CBX_ServerVersion.FocusedColor = Color.FromArgb(162, 123, 90);
+            CBX_ServerVersion.FocusedState.BorderColor = Color.FromArgb(162, 123, 90);
+            CBX_ServerVersion.Font = new Font("Lexend", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CBX_ServerVersion.ForeColor = Color.FromArgb(235, 234, 234);
+            CBX_ServerVersion.HoverState.BorderColor = Color.FromArgb(194, 165, 142);
+            CBX_ServerVersion.ItemHeight = 30;
+            CBX_ServerVersion.Location = new Point(172, 55);
+            CBX_ServerVersion.MaxDropDownItems = 10;
+            CBX_ServerVersion.Name = "CBX_ServerVersion";
+            CBX_ServerVersion.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            CBX_ServerVersion.Size = new Size(156, 36);
+            CBX_ServerVersion.TabIndex = 5;
+            CBX_ServerVersion.TextOffset = new Point(0, 1);
+            CBX_ServerVersion.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+            CBX_ServerVersion.SelectedIndexChanged += CBX_ServerVersion_SelectedIndexChanged;
             // 
             // PGB_Download
             // 
-            PGB_Download.Anchor = AnchorStyles.Top;
-            PGB_Download.Location = new Point(21, 79);
+            PGB_Download.AutoRoundedCorners = true;
+            PGB_Download.BorderColor = Color.FromArgb(80, 76, 76);
+            PGB_Download.BorderThickness = 1;
+            PGB_Download.CustomizableEdges = customizableEdges5;
+            PGB_Download.FillColor = Color.FromArgb(58, 55, 55);
+            PGB_Download.Location = new Point(21, 97);
             PGB_Download.Name = "PGB_Download";
-            PGB_Download.Size = new Size(181, 11);
-            PGB_Download.TabIndex = 4;
-            PGB_Download.UseWaitCursor = true;
+            PGB_Download.ProgressBrushMode = Guna.UI2.WinForms.Enums.BrushMode.Solid;
+            PGB_Download.ProgressColor = Color.FromArgb(162, 123, 90);
+            PGB_Download.ProgressColor2 = Color.FromArgb(162, 123, 90);
+            PGB_Download.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            PGB_Download.Size = new Size(307, 15);
+            PGB_Download.TabIndex = 6;
+            PGB_Download.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
             PGB_Download.Visible = false;
+            // 
+            // BTN_DownloadServerJarFile
+            // 
+            BTN_DownloadServerJarFile.Animated = true;
+            BTN_DownloadServerJarFile.AutoRoundedCorners = true;
+            BTN_DownloadServerJarFile.BackColor = Color.Transparent;
+            BTN_DownloadServerJarFile.BorderColor = Color.Empty;
+            BTN_DownloadServerJarFile.Cursor = Cursors.Hand;
+            BTN_DownloadServerJarFile.CustomizableEdges = customizableEdges7;
+            BTN_DownloadServerJarFile.DisabledState.BorderColor = Color.DarkGray;
+            BTN_DownloadServerJarFile.DisabledState.CustomBorderColor = Color.DarkGray;
+            BTN_DownloadServerJarFile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            BTN_DownloadServerJarFile.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            BTN_DownloadServerJarFile.FillColor = Color.FromArgb(162, 123, 90);
+            BTN_DownloadServerJarFile.Font = new Font("Lexend", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BTN_DownloadServerJarFile.ForeColor = Color.White;
+            BTN_DownloadServerJarFile.Location = new Point(21, 118);
+            BTN_DownloadServerJarFile.Name = "BTN_DownloadServerJarFile";
+            BTN_DownloadServerJarFile.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            BTN_DownloadServerJarFile.Size = new Size(307, 39);
+            BTN_DownloadServerJarFile.TabIndex = 7;
+            BTN_DownloadServerJarFile.Text = "Download";
+            BTN_DownloadServerJarFile.Click += BTN_DownloadServerJarFile_Click;
             // 
             // FRM_DownloadServerJarFile
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(222, 113);
-            Controls.Add(PGB_Download);
+            BackColor = Color.FromArgb(38, 34, 34);
+            ClientSize = new Size(335, 165);
             Controls.Add(BTN_DownloadServerJarFile);
+            Controls.Add(PGB_Download);
+            Controls.Add(CBX_ServerVersion);
             Controls.Add(CBX_ServerType);
             Controls.Add(LBL_ServerType);
-            Controls.Add(CBX_ServerVersion);
             Controls.Add(LBL_ServerVersion);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -121,7 +184,7 @@
             MinimizeBox = false;
             Name = "FRM_DownloadServerJarFile";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Minecraft Advanced Server Console :: Java File";
+            Text = "MCA Console Download";
             Load += FRM_DownloadServerJarFile_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -130,10 +193,10 @@
         #endregion
 
         private Label LBL_ServerVersion;
-        private ComboBox CBX_ServerVersion;
         private Label LBL_ServerType;
-        private ComboBox CBX_ServerType;
-        private Button BTN_DownloadServerJarFile;
-        private ProgressBar PGB_Download;
+        private Guna.UI2.WinForms.Guna2ComboBox CBX_ServerType;
+        private Guna.UI2.WinForms.Guna2ComboBox CBX_ServerVersion;
+        private Guna.UI2.WinForms.Guna2ProgressBar PGB_Download;
+        private Guna.UI2.WinForms.Guna2Button BTN_DownloadServerJarFile;
     }
 }

@@ -186,8 +186,6 @@ namespace MCA_ServerConsole.Properties
         {
             SetBusy(true);
 
-            this.Size = new Size(238, 171);
-
             // Prepare progress bar
             PGB_Download.Visible = true;
             PGB_Download.Minimum = 0;
@@ -228,7 +226,6 @@ namespace MCA_ServerConsole.Properties
                 if(!sizeKnown)
                 {
                     PGB_Download.Style = ProgressBarStyle.Marquee;
-                    PGB_Download.MarqueeAnimationSpeed = 30;
                 }
 
                 using Stream input = await response.Content.ReadAsStreamAsync();
@@ -272,7 +269,6 @@ namespace MCA_ServerConsole.Properties
             {
                 // Hide progress bar
                 PGB_Download.Visible = false;
-                this.Size = new Size(238, 152);
                 SetBusy(false);
             }
         }

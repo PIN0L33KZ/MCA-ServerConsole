@@ -67,6 +67,14 @@
             CMS_RTB_ServerLog = new ContextMenuStrip(components);
             TMI_SaveOutput = new ToolStripMenuItem();
             TIP_Main = new ToolTip(components);
+            TSP_Main = new ToolStrip();
+            TSB_Tools = new ToolStripDropDownButton();
+            TSM_WhitelistEditor = new ToolStripMenuItem();
+            TSM_BanEditor = new ToolStripMenuItem();
+            TSM_PlayerActions = new ToolStripMenuItem();
+            TSM_PropertiesEditor = new ToolStripMenuItem();
+            TSM_Analytics = new ToolStripMenuItem();
+            TSM_MotdEditor = new ToolStripMenuItem();
             PNL_Top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_ServerRam).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PBX_ServerImage).BeginInit();
@@ -78,6 +86,7 @@
             TSP_StatusBar.SuspendLayout();
             PNL_Fill_Top.SuspendLayout();
             CMS_RTB_ServerLog.SuspendLayout();
+            TSP_Main.SuspendLayout();
             SuspendLayout();
             // 
             // PNL_Top
@@ -93,7 +102,7 @@
             PNL_Top.Controls.Add(PBX_ServerImage);
             PNL_Top.Controls.Add(LBL_ServerName);
             PNL_Top.Dock = DockStyle.Top;
-            PNL_Top.Location = new Point(0, 0);
+            PNL_Top.Location = new Point(0, 25);
             PNL_Top.Name = "PNL_Top";
             PNL_Top.Size = new Size(1010, 45);
             PNL_Top.TabIndex = 0;
@@ -209,7 +218,7 @@
             TRV_Directory.Location = new Point(0, 5);
             TRV_Directory.Name = "TRV_Directory";
             TRV_Directory.SelectedImageIndex = 0;
-            TRV_Directory.Size = new Size(286, 451);
+            TRV_Directory.Size = new Size(286, 426);
             TRV_Directory.TabIndex = 2;
             TRV_Directory.NodeMouseClick += TRV_Directory_NodeMouseClick;
             TRV_Directory.NodeMouseDoubleClick += TRV_Directory_NodeMouseDoubleClick;
@@ -257,10 +266,10 @@
             // 
             PNL_Left.Controls.Add(TRV_Directory);
             PNL_Left.Dock = DockStyle.Left;
-            PNL_Left.Location = new Point(0, 45);
+            PNL_Left.Location = new Point(0, 70);
             PNL_Left.Name = "PNL_Left";
             PNL_Left.Padding = new Padding(0, 5, 0, 0);
-            PNL_Left.Size = new Size(286, 456);
+            PNL_Left.Size = new Size(286, 431);
             PNL_Left.TabIndex = 1;
             // 
             // PNL_Fill
@@ -269,9 +278,9 @@
             PNL_Fill.Controls.Add(PNL_Fill_Bottom);
             PNL_Fill.Controls.Add(PNL_Fill_Top);
             PNL_Fill.Dock = DockStyle.Fill;
-            PNL_Fill.Location = new Point(286, 45);
+            PNL_Fill.Location = new Point(286, 70);
             PNL_Fill.Name = "PNL_Fill";
-            PNL_Fill.Size = new Size(724, 456);
+            PNL_Fill.Size = new Size(724, 431);
             PNL_Fill.TabIndex = 2;
             // 
             // PNL_Fill_Fill
@@ -281,7 +290,7 @@
             PNL_Fill_Fill.Location = new Point(0, 45);
             PNL_Fill_Fill.Name = "PNL_Fill_Fill";
             PNL_Fill_Fill.Padding = new Padding(5);
-            PNL_Fill_Fill.Size = new Size(724, 340);
+            PNL_Fill_Fill.Size = new Size(724, 315);
             PNL_Fill_Fill.TabIndex = 3;
             // 
             // RTB_ServerLog
@@ -292,7 +301,7 @@
             RTB_ServerLog.Location = new Point(5, 5);
             RTB_ServerLog.Name = "RTB_ServerLog";
             RTB_ServerLog.ReadOnly = true;
-            RTB_ServerLog.Size = new Size(714, 330);
+            RTB_ServerLog.Size = new Size(714, 305);
             RTB_ServerLog.TabIndex = 1;
             RTB_ServerLog.Text = "";
             RTB_ServerLog.TextChanged += RTB_ServerLog_TextChanged;
@@ -303,7 +312,7 @@
             PNL_Fill_Bottom.Controls.Add(TBX_CommandText);
             PNL_Fill_Bottom.Controls.Add(TSP_StatusBar);
             PNL_Fill_Bottom.Dock = DockStyle.Bottom;
-            PNL_Fill_Bottom.Location = new Point(0, 385);
+            PNL_Fill_Bottom.Location = new Point(0, 360);
             PNL_Fill_Bottom.Name = "PNL_Fill_Bottom";
             PNL_Fill_Bottom.Size = new Size(724, 71);
             PNL_Fill_Bottom.TabIndex = 2;
@@ -458,6 +467,62 @@
             TMI_SaveOutput.Text = "Save output";
             TMI_SaveOutput.Click += TMI_SaveOutput_Click;
             // 
+            // TSP_Main
+            // 
+            TSP_Main.GripStyle = ToolStripGripStyle.Hidden;
+            TSP_Main.Items.AddRange(new ToolStripItem[] { TSB_Tools });
+            TSP_Main.Location = new Point(0, 0);
+            TSP_Main.Name = "TSP_Main";
+            TSP_Main.Size = new Size(1010, 25);
+            TSP_Main.TabIndex = 4;
+            TSP_Main.Text = "toolStrip1";
+            // 
+            // TSB_Tools
+            // 
+            TSB_Tools.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            TSB_Tools.DropDownItems.AddRange(new ToolStripItem[] { TSM_WhitelistEditor, TSM_BanEditor, TSM_PlayerActions, TSM_PropertiesEditor, TSM_Analytics, TSM_MotdEditor });
+            TSB_Tools.Image = (Image)resources.GetObject("TSB_Tools.Image");
+            TSB_Tools.ImageTransparentColor = Color.Magenta;
+            TSB_Tools.Name = "TSB_Tools";
+            TSB_Tools.Size = new Size(48, 22);
+            TSB_Tools.Text = "Tools";
+            // 
+            // TSM_WhitelistEditor
+            // 
+            TSM_WhitelistEditor.Name = "TSM_WhitelistEditor";
+            TSM_WhitelistEditor.Size = new Size(161, 22);
+            TSM_WhitelistEditor.Text = "Whitelist Editor";
+            // 
+            // TSM_BanEditor
+            // 
+            TSM_BanEditor.Name = "TSM_BanEditor";
+            TSM_BanEditor.Size = new Size(161, 22);
+            TSM_BanEditor.Text = "Ban Editor";
+            // 
+            // TSM_PlayerActions
+            // 
+            TSM_PlayerActions.Name = "TSM_PlayerActions";
+            TSM_PlayerActions.Size = new Size(161, 22);
+            TSM_PlayerActions.Text = "Player Actions";
+            // 
+            // TSM_PropertiesEditor
+            // 
+            TSM_PropertiesEditor.Name = "TSM_PropertiesEditor";
+            TSM_PropertiesEditor.Size = new Size(161, 22);
+            TSM_PropertiesEditor.Text = "Properties Editor";
+            // 
+            // TSM_Analytics
+            // 
+            TSM_Analytics.Name = "TSM_Analytics";
+            TSM_Analytics.Size = new Size(161, 22);
+            TSM_Analytics.Text = "Analytics";
+            // 
+            // TSM_MotdEditor
+            // 
+            TSM_MotdEditor.Name = "TSM_MotdEditor";
+            TSM_MotdEditor.Size = new Size(161, 22);
+            TSM_MotdEditor.Text = "MOTD Editor";
+            // 
             // FRM_Console
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -466,6 +531,7 @@
             Controls.Add(PNL_Fill);
             Controls.Add(PNL_Left);
             Controls.Add(PNL_Top);
+            Controls.Add(TSP_Main);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(872, 449);
             Name = "FRM_Console";
@@ -485,7 +551,10 @@
             TSP_StatusBar.PerformLayout();
             PNL_Fill_Top.ResumeLayout(false);
             CMS_RTB_ServerLog.ResumeLayout(false);
+            TSP_Main.ResumeLayout(false);
+            TSP_Main.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -529,5 +598,13 @@
         private CheckBox CHX_ShowJavaConsole;
         private Button BTN_AddJavaFile;
         private ToolTip TIP_Main;
+        private ToolStrip TSP_Main;
+        private ToolStripDropDownButton TSB_Tools;
+        private ToolStripMenuItem TSM_WhitelistEditor;
+        private ToolStripMenuItem TSM_BanEditor;
+        private ToolStripMenuItem TSM_PlayerActions;
+        private ToolStripMenuItem TSM_PropertiesEditor;
+        private ToolStripMenuItem TSM_Analytics;
+        private ToolStripMenuItem TSM_MotdEditor;
     }
 }
