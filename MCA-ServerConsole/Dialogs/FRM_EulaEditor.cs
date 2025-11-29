@@ -42,10 +42,13 @@ namespace MCA_ServerConsole.Dialogs
                 string updatedContent = fileContent.Replace("eula=false", "eula=true");
 
                 File.WriteAllText(eulaFile, updatedContent);
+
+                this.DialogResult = DialogResult.OK;
             }
             catch(Exception ex)
             {
                 Console.WriteLine($"Error while writing to eula.txt: {ex.Message}");
+                this.DialogResult = DialogResult.Cancel;
             }
         }
 

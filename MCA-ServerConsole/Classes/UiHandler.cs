@@ -1,26 +1,28 @@
 ﻿using MCA_ServerConsole.Dialogs;
 using MCA_ServerConsole.HelperClasses;
+using Guna.UI2.WinForms;
 
 namespace MCA_ServerConsole.Classes
 {
-    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Button startServerButton, Button reloadServerButton, Button stopServerButton, Button addJavaFileButton, ComboBox jarFileSelectionComboBox, NumericUpDown serverRam, TextBox commandTextBox, Button sendCommandButton, Button saveConsoleOutputButton, RichTextBox serverLog, ContextMenuStrip contextMenuStrip, CheckBox javaConsole, JavaProcessHandler processHandler)
+    public class UIHandler(ToolStripLabel serverStatusLabel, ToolStripLabel gameVersionLabel, ToolStripLabel portStatusLabel, ToolStripLabel defaultGamemodeLabel, Guna2CircleProgressBar serverStartLoading, Guna2Button startServerButton, Guna2Button reloadServerButton, Guna2Button stopServerButton, Guna2Button addJavaFileButton, Guna2ComboBox jarFileSelectionComboBox, Guna2NumericUpDown serverRam, Guna2TextBox commandTextBox, Guna2Button sendCommandButton, Guna2Button saveConsoleOutputButton, RichTextBox serverLog, ContextMenuStrip contextMenuStrip, Guna2ToggleSwitch javaConsole, JavaProcessHandler processHandler)
     {
         private readonly ToolStripLabel _serverStatusLabel = serverStatusLabel;
         private readonly ToolStripLabel _gameVersionLabel = gameVersionLabel;
         private readonly ToolStripLabel _portStatusLabel = portStatusLabel;
         private readonly ToolStripLabel _defaultGamemodeLabel = defaultGamemodeLabel;
-        private readonly Button _startServerButton = startServerButton;
-        private readonly Button _reloadServerButton = reloadServerButton;
-        private readonly Button _stopServerButton = stopServerButton;
-        private readonly Button _addJavaFileButton = addJavaFileButton;
-        private readonly ComboBox _jarFileSelectionComboBox = jarFileSelectionComboBox;
-        private readonly NumericUpDown _serverRam = serverRam;
-        private readonly TextBox _commandTextBox = commandTextBox;
-        private readonly Button _sendCommandButton = sendCommandButton;
-        private readonly Button _saveConsoleOutputButton = saveConsoleOutputButton;
+        private readonly Guna2CircleProgressBar _serverStartLoading = serverStartLoading;
+        private readonly Guna2Button _startServerButton = startServerButton;
+        private readonly Guna2Button _reloadServerButton = reloadServerButton;
+        private readonly Guna2Button _stopServerButton = stopServerButton;
+        private readonly Guna2Button _addJavaFileButton = addJavaFileButton;
+        private readonly Guna2ComboBox _jarFileSelectionComboBox = jarFileSelectionComboBox;
+        private readonly Guna2NumericUpDown _serverRam = serverRam;
+        private readonly Guna2TextBox _commandTextBox = commandTextBox;
+        private readonly Guna2Button _sendCommandButton = sendCommandButton;
+        private readonly Guna2Button _saveConsoleOutputButton = saveConsoleOutputButton;
         private readonly RichTextBox _serverLog = serverLog;
         private readonly ContextMenuStrip _menuStrip = contextMenuStrip;
-        private readonly CheckBox _javaConsole = javaConsole;
+        private readonly Guna2ToggleSwitch _javaConsole = javaConsole;
 
         public void UpdateUI(string keyword, string output)
         {
@@ -31,6 +33,7 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server is waiting for user action";
                     _serverStatusLabel.Image = Properties.Resources.waiting;
                     _startServerButton.Enabled = true;
+                    _serverStartLoading.Visible = false;
                     _addJavaFileButton.Enabled = true;
                     _javaConsole.Enabled = true;
                     _jarFileSelectionComboBox.Enabled = true;
@@ -59,6 +62,7 @@ namespace MCA_ServerConsole.Classes
                     if(MessageBox.Show("There is already a server process running in the background, shutdown now?", "MCA Console", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     {
                         _startServerButton.Enabled = true;
+                        _serverStartLoading.Visible = false;
                         _addJavaFileButton.Enabled = true;
                         _javaConsole.Enabled = true;
                         _serverRam.Enabled = true;
@@ -68,6 +72,7 @@ namespace MCA_ServerConsole.Classes
 
                     JavaProcessHandler.KillAlreadyRunningJavaProcesses();
                     _startServerButton.Enabled = true;
+                    _serverStartLoading.Visible = false;
                     _startServerButton.PerformClick();
                     break;
 
@@ -76,6 +81,7 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server starting... ";
                     _serverStatusLabel.Image = Properties.Resources.starting;
                     _startServerButton.Enabled = false;
+                    _serverStartLoading.Visible = true;
                     _javaConsole.Enabled = false;
                     _reloadServerButton.Enabled = false;
                     _stopServerButton.Enabled = false;
@@ -106,6 +112,7 @@ namespace MCA_ServerConsole.Classes
                     _serverStatusLabel.Text = "Server running |";
                     _serverStatusLabel.Image = Properties.Resources.running;
                     _startServerButton.Enabled = false;
+                    _serverStartLoading.Visible = false;
                     _javaConsole.Enabled = false;
                     _reloadServerButton.Enabled = true;
                     _stopServerButton.Enabled = true;

@@ -9,6 +9,14 @@ namespace MCA_ServerConsole
         public FRM_Setup()
         {
             InitializeComponent();
+
+            // GunaUI descender cut-off fix:
+            TBX_ServerName.KeyDown += ControlsHelper.SupressEnterKey;
+            TBX_ServerName.TextChanged += ControlsHelper.CutNewLines;
+            TBX_ServerAddress.KeyDown += ControlsHelper.SupressEnterKey;
+            TBX_ServerAddress.TextChanged += ControlsHelper.CutNewLines;
+            TBX_ServerDirectory.KeyDown += ControlsHelper.SupressEnterKey;
+            TBX_ServerDirectory.TextChanged += ControlsHelper.CutNewLines;
         }
 
         private void FRM_Setup_Load(object sender, EventArgs e)
@@ -106,6 +114,7 @@ namespace MCA_ServerConsole
 
                 //// Update the textbox with the selected directory
                 TBX_ServerDirectory.Text = fBD.SelectedPath;
+                TBX_ServerDirectory.Focus();
                 TBX_ServerDirectory.SelectionStart = TBX_ServerDirectory.TextLength;
                 TBX_ServerDirectory.ScrollToCaret();
             }
@@ -116,7 +125,7 @@ namespace MCA_ServerConsole
             }
         }
 
-        private void BTX_SelectServerImage_Click(object sender, EventArgs e)
+        private void BTN_SelectServerImage_Click(object sender, EventArgs e)
         {
             try
             {

@@ -75,7 +75,7 @@
             // 
             CBX_ServerType.AutoRoundedCorners = true;
             CBX_ServerType.BackColor = Color.Transparent;
-            CBX_ServerType.BorderColor = Color.FromArgb(80, 76, 76);
+            CBX_ServerType.BorderColor = Color.FromArgb(103, 99, 99);
             CBX_ServerType.BorderThickness = 2;
             CBX_ServerType.Cursor = Cursors.Hand;
             CBX_ServerType.CustomizableEdges = customizableEdges1;
@@ -93,8 +93,8 @@
             CBX_ServerType.Name = "CBX_ServerType";
             CBX_ServerType.ShadowDecoration.CustomizableEdges = customizableEdges2;
             CBX_ServerType.Size = new Size(156, 36);
-            CBX_ServerType.TabIndex = 5;
-            CBX_ServerType.TextOffset = new Point(0, 1);
+            CBX_ServerType.TabIndex = 0;
+            CBX_ServerType.TextOffset = new Point(2, 1);
             CBX_ServerType.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             CBX_ServerType.SelectedIndexChanged += CBX_ServerType_SelectedIndexChanged;
             // 
@@ -102,7 +102,7 @@
             // 
             CBX_ServerVersion.AutoRoundedCorners = true;
             CBX_ServerVersion.BackColor = Color.Transparent;
-            CBX_ServerVersion.BorderColor = Color.FromArgb(80, 76, 76);
+            CBX_ServerVersion.BorderColor = Color.FromArgb(103, 99, 99);
             CBX_ServerVersion.BorderThickness = 2;
             CBX_ServerVersion.Cursor = Cursors.Hand;
             CBX_ServerVersion.CustomizableEdges = customizableEdges3;
@@ -120,15 +120,15 @@
             CBX_ServerVersion.Name = "CBX_ServerVersion";
             CBX_ServerVersion.ShadowDecoration.CustomizableEdges = customizableEdges4;
             CBX_ServerVersion.Size = new Size(156, 36);
-            CBX_ServerVersion.TabIndex = 5;
-            CBX_ServerVersion.TextOffset = new Point(0, 1);
+            CBX_ServerVersion.TabIndex = 1;
+            CBX_ServerVersion.TextOffset = new Point(2, 1);
             CBX_ServerVersion.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
             CBX_ServerVersion.SelectedIndexChanged += CBX_ServerVersion_SelectedIndexChanged;
             // 
             // PGB_Download
             // 
             PGB_Download.AutoRoundedCorners = true;
-            PGB_Download.BorderColor = Color.FromArgb(80, 76, 76);
+            PGB_Download.BorderColor = Color.FromArgb(103, 99, 99);
             PGB_Download.BorderThickness = 1;
             PGB_Download.CustomizableEdges = customizableEdges5;
             PGB_Download.FillColor = Color.FromArgb(58, 55, 55);
@@ -162,7 +162,7 @@
             BTN_DownloadServerJarFile.Name = "BTN_DownloadServerJarFile";
             BTN_DownloadServerJarFile.ShadowDecoration.CustomizableEdges = customizableEdges8;
             BTN_DownloadServerJarFile.Size = new Size(307, 39);
-            BTN_DownloadServerJarFile.TabIndex = 7;
+            BTN_DownloadServerJarFile.TabIndex = 2;
             BTN_DownloadServerJarFile.Text = "Download";
             BTN_DownloadServerJarFile.Click += BTN_DownloadServerJarFile_Click;
             // 

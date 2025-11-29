@@ -1,4 +1,5 @@
 ﻿using FastColoredTextBoxNS;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MCA_ServerConsole.Dialogs
@@ -9,13 +10,13 @@ namespace MCA_ServerConsole.Dialogs
         private FastColoredTextBox FCT_CodeEditor;
 
         // Define styles once and reuse them
-        private readonly TextStyle CommentStyle = new(new SolidBrush(Color.FromArgb(16, 172, 132)), null, FontStyle.Italic);
-        private readonly TextStyle KeyStyle = new(new SolidBrush(Color.FromArgb(95, 39, 205)), null, FontStyle.Bold);
-        private readonly TextStyle ValueStyle = new(new SolidBrush(Color.FromArgb(238, 82, 83)), null, FontStyle.Regular);
-        private readonly TextStyle EscapeStyle = new(new SolidBrush(Color.FromArgb(46, 134, 222)), null, FontStyle.Bold);
-        private readonly TextStyle TimeStyle = new(new SolidBrush(Color.FromArgb(46, 134, 222)), null, FontStyle.Bold);
-        private readonly TextStyle LogLevelStyle = new(new SolidBrush(Color.FromArgb(255, 159, 67)), null, FontStyle.Bold);
-        private readonly TextStyle ThreadStyle = new(new SolidBrush(Color.FromArgb(16, 172, 132)), null, FontStyle.Italic);
+        private readonly TextStyle CommentStyle = new(new SolidBrush(Color.FromArgb(151, 148, 148)), null, FontStyle.Italic);
+        private readonly TextStyle KeyStyle = new(new SolidBrush(Color.FromArgb(64, 119, 209)), null, FontStyle.Bold);
+        private readonly TextStyle ValueStyle = new(new SolidBrush(Color.FromArgb(217, 74, 74)), null, FontStyle.Regular);
+        private readonly TextStyle EscapeStyle = new(new SolidBrush(Color.FromArgb(71, 213, 166)), null, FontStyle.Bold);
+        private readonly TextStyle TimeStyle = new(new SolidBrush(Color.FromArgb(71, 213, 166)), null, FontStyle.Bold);
+        private readonly TextStyle LogLevelStyle = new(new SolidBrush(Color.FromArgb(215, 172, 97)), null, FontStyle.Bold);
+        private readonly TextStyle ThreadStyle = new(new SolidBrush(Color.FromArgb(64, 119, 209)), null, FontStyle.Italic);
 
         public FRM_CodeEditor(string filePath)
         {
@@ -42,8 +43,9 @@ namespace MCA_ServerConsole.Dialogs
                     AutoIndent = true,
                     ShowLineNumbers = true,
                     WordWrap = false,
-                    BackColor = Color.White,
-                    ForeColor = Color.Black
+                    BackColor = Color.FromArgb(58, 55, 55),
+                    ForeColor = Color.FromArgb(235, 234, 234),
+                    LineNumberColor = Color.FromArgb(162, 123, 90),
                 };
 
                 // Remove existing TextChanged events to prevent multiple bindings
@@ -71,6 +73,7 @@ namespace MCA_ServerConsole.Dialogs
                     case ".log":
                         FCT_CodeEditor.TextChanged += ApplySyntaxHighlighting;
                         Text += $" ({fileExtension} File)";
+                        PNL_Bottom.Visible = false; // Hide save button for log files
                         break;
 
                     default:
@@ -84,6 +87,10 @@ namespace MCA_ServerConsole.Dialogs
 
                 // Add the editor to the panel
                 PNL_Fill.Controls.Add(FCT_CodeEditor);
+
+                // Add Scrollbar to editor
+                HSB_1.BindingContainer = FCT_CodeEditor;
+                this.Refresh();
             }
             catch(Exception ex)
             {
@@ -91,6 +98,11 @@ namespace MCA_ServerConsole.Dialogs
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close(); // Close the form if initialization fails
             }
+        }
+
+        private void FCT_CodeEditor_Scroll(object? sender, ScrollEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void ApplySyntaxHighlighting(object sender, TextChangedEventArgs e)
@@ -280,6 +292,11 @@ namespace MCA_ServerConsole.Dialogs
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true; // Prevent the form from closing on error
             }
+        }
+
+        private void HSB_1_Scroll(object sender, ScrollEventArgs e)
+        {
+            this.Refresh();
         }
     }
 }

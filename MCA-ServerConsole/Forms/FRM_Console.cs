@@ -24,7 +24,7 @@ namespace MCA_ServerConsole.Forms
             InitializeComponent();
 
             // Initialize Handler
-            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, BTN_AddJavaFile, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, CHX_ShowJavaConsole, _javaProcessHandler);
+            _uiHandler = new UIHandler(TSL_ServerStatus, TSL_GameVersion, TSL_PortStatus, TSL_DefaultGamemode, CPG_Start, BTN_StartServer, BTN_ReloadServer, BTN_StopServer, BTN_AddJavaFile, CBX_JarFile, NUD_ServerRam, TBX_CommandText, BTN_SendCommand, BTN_SaveOutput, RTB_ServerLog, CMS_RTB_ServerLog, TSW_ShowJavaConsole, _javaProcessHandler);
             _javaProcessHandler = new JavaProcessHandler(HandleKeyword);
             _fileSystemManager = new FileSystemManager(UpdateDirectoryStructure);
 
@@ -43,7 +43,7 @@ namespace MCA_ServerConsole.Forms
             try
             {
                 PBX_ServerImage.Image = ImageHelper.ConvertStringToImage(Properties.Settings.Default.ServerImage);
-                LBL_ServerName.Text = LBL_ServerName.Text.Replace(@"$serverName", Properties.Settings.Default.ServerName);
+                LBL_ServerName.Text = Properties.Settings.Default.ServerName;
                 NUD_ServerRam.Maximum = SystemHelper.GetAvailableRAM();
                 TSL_ServerStatus.Text = "Server stopped";
                 TSL_ServerStatus.Image = Properties.Resources.stopped;
@@ -183,7 +183,7 @@ namespace MCA_ServerConsole.Forms
                     return;
                 }
 
-                string javaGui = CHX_ShowJavaConsole.Checked ? "" : "nogui";
+                string javaGui = TSW_ShowJavaConsole.Checked ? "" : "nogui";
 
                 _javaProcessHandler.KillJavaProcess();
                 RTB_ServerLog.Clear();
